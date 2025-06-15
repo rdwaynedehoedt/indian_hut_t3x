@@ -1,26 +1,118 @@
-@import "tailwindcss/preflight.css";
-@import "tailwindcss/utilities.css";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* INDIAN HUT – HERITAGE, GALLE FORT
+   A heritage-inspired café and restaurant website with a minimal, static experience
+   designed to evoke the rich cultural essence of Indian traditions blended with
+   the timeless charm of Galle Fort.
+*/
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  /* Color Palette */
+  --sand: #F6F1EB;       /* Clean, warm base */
+  --charcoal: #2E2B27;   /* Strong heritage-styled text */
+  --roast: #4A3F35;      /* Secondary text color */
+  --gold: #B89B67;       /* Sophistication and tradition */
+  --heritage: #556B2F;   /* Natural, leafy hints */
+  --sage: #A3B18A;       /* Grounding atmosphere */
+  --spice: #9B4444;      /* Spice-like highlight, used sparingly */
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+@layer base {
+  body {
+    font-family: var(--font-geist-sans);
+    background-color: var(--sand);
+    color: var(--charcoal);
+    letter-spacing: 0.01em;
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+@layer components {
+  /* Typography Utilities */
+  .font-playfair {
+    font-family: var(--font-playfair);
+  }
+
+  /* Subtle Interactions */
+  .hover-heritage {
+    transition: color 0.3s ease;
+  }
+
+  .hover-heritage:hover {
+    color: var(--heritage);
+  }
+
+  .hover-gold {
+    transition: color 0.3s ease;
+  }
+
+  .hover-gold:hover {
+    color: var(--gold);
+  }
+
+  /* Border Accents */
+  .border-heritage {
+    border-color: var(--heritage);
+  }
+
+  .border-gold {
+    border-color: var(--gold);
+  }
+
+  .border-sage {
+    border-color: var(--sage);
+  }
+
+  .border-spice {
+    border-color: var(--spice);
+  }
+
+  /* Subtle Background Variations */
+  .bg-sand-light {
+    background-color: #FBF7F3;
+  }
+
+  .bg-sand-dark {
+    background-color: #EFE8E0;
+  }
+
+  /* Animation Utilities */
+  .transition-soft {
+    transition: all 0.4s ease;
+  }
+
+  /* Custom Spacing for Heritage Feel */
+  .heritage-spacing {
+    letter-spacing: 0.05em;
+  }
+}
+
+/* Additional custom styles */
+.bg-sand {
+  background-color: #F6F1EB;
+}
+
+.text-charcoal {
+  color: #2E2B27;
+}
+
+.text-roast {
+  color: #4A3F35;
+}
+
+.text-gold {
+  color: #B89B67;
+}
+
+.text-heritage {
+  color: #556B2F;
+}
+
+.text-sage {
+  color: #A3B18A;
+}
+
+.text-spice {
+  color: #9B4444;
 }
