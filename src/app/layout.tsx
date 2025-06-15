@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { Playfair_Display } from "next/font/google";
 import Header from "../components/layout/Header";
 import Footer from "../components/layout/Footer";
+import PageRevealTransition from "../components/ui/PageRevealTransition";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -37,9 +38,11 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable} antialiased bg-sand text-charcoal min-h-screen flex flex-col`}
       >
         <Header />
-        <div className="flex-grow">
-          {children}
-        </div>
+        <PageRevealTransition>
+          <div className="flex-grow">
+            {children}
+          </div>
+        </PageRevealTransition>
         <Footer />
       </body>
     </html>
