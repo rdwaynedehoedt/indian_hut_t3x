@@ -20,6 +20,7 @@ module.exports = {
         playfair: ["var(--font-playfair)"],
         sans: ["var(--font-geist-sans)"],
         mono: ["var(--font-geist-mono)"],
+        handwritten: ["var(--font-handwritten)"],
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',

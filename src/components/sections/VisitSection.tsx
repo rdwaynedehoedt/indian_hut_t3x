@@ -1,47 +1,35 @@
 "use client";
 
-import { useRef } from "react";
+import { useState } from "react";
 import Image from "next/image";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import SectionTitle from "../ui/SectionTitle";
+import LighthouseFogEffect from "../ui/LighthouseFogEffect";
+import Link from "next/link";
 
 export default function VisitSection() {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start end", "end start"]
-  });
-
-  const mapScale = useTransform(scrollYProgress, [0, 0.5], [0.9, 1]);
-  const mapOpacity = useTransform(scrollYProgress, [0, 0.3], [0.7, 1]);
+  const [mapHovered, setMapHovered] = useState(false);
+  const googleMapsUrl = "https://maps.app.goo.gl/sY1kJ4P3Nx3uHFy2A";
   
   return (
-    <section ref={sectionRef} className="py-20 md:py-32 px-4 sm:px-6 md:px-12 lg:px-24 bg-sand relative overflow-hidden">
+    <section className="py-20 md:py-32 px-4 sm:px-6 md:px-12 lg:px-24 bg-sand-light relative overflow-hidden">
+      {/* Lighthouse fog effect in the background */}
+      <LighthouseFogEffect />
+      
       {/* Decorative background elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      <div className="absolute inset-0 pointer-events-none">
         {/* Subtle grid pattern */}
-        <div className="absolute inset-0 bg-grid-pattern opacity-[0.03]" />
-        
-        {/* Decorative elements */}
-        <div className="absolute top-20 left-10 w-32 h-32 opacity-[0.05]">
-          <Image 
-            src="/images/decorative/decorative-element-3.png" 
-            alt="Decorative pattern" 
-            width={128}
-            height={128}
-            className="object-contain"
-          />
-        </div>
+        <div className="absolute inset-0 bg-grid-pattern opacity-[0.03] mix-blend-multiply" />
       </div>
       
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-7xl mx-auto relative z-10">
         <SectionTitle 
           title="Visit Us" 
-          subtitle="Experience the authentic flavors of Indian Hut in our heritage-inspired restaurant in Galle Fort."
+          subtitle="Experience the authentic flavors of Indian Hut at our Galle Fort location."
         />
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 mt-16">
-          {/* Left column - Info and contact */}
+        <div className="mt-16 grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16">
+          {/* Left column - Contact information */}
           <div className="flex flex-col justify-center">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -49,106 +37,111 @@ export default function VisitSection() {
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.7 }}
             >
-              <h3 className="text-2xl md:text-3xl font-playfair text-charcoal mb-6">Come Dine With Us</h3>
+              <h3 className="text-2xl md:text-3xl font-playfair text-charcoal mb-6">Our Location</h3>
               
               <div className="space-y-6">
                 {/* Address */}
                 <div className="flex items-start">
-                  <div className="mr-4 mt-1 text-heritage">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                      <circle cx="12" cy="10" r="3"></circle>
+                  <div className="w-10 h-10 rounded-full bg-sand flex items-center justify-center flex-shrink-0 mt-1">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M12 13C13.6569 13 15 11.6569 15 10C15 8.34315 13.6569 7 12 7C10.3431 7 9 8.34315 9 10C9 11.6569 10.3431 13 12 13Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      <path d="M12 22C16 18 20 14.4183 20 10C20 5.58172 16.4183 2 12 2C7.58172 2 4 5.58172 4 10C4 14.4183 8 18 12 22Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
                   </div>
-                  <div>
-                    <h4 className="font-medium text-charcoal mb-1">Location</h4>
-                    <p className="text-roast">42 Church Street, Galle Fort<br />Galle, Sri Lanka</p>
+                  <div className="ml-4">
+                    <h4 className="text-lg font-medium text-charcoal mb-1">Address</h4>
+                    <p className="text-roast">
+                      42 Church Street, Galle Fort<br />
+                      Galle, Sri Lanka
+                    </p>
                   </div>
                 </div>
                 
                 {/* Hours */}
                 <div className="flex items-start">
-                  <div className="mr-4 mt-1 text-heritage">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <circle cx="12" cy="12" r="10"></circle>
-                      <polyline points="12 6 12 12 16 14"></polyline>
+                  <div className="w-10 h-10 rounded-full bg-sand flex items-center justify-center flex-shrink-0 mt-1">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                      <path d="M12 6V12L16 14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
                   </div>
-                  <div>
-                    <h4 className="font-medium text-charcoal mb-1">Opening Hours</h4>
-                    <p className="text-roast">Monday - Sunday: 11:00 AM - 10:00 PM</p>
-                    <p className="text-roast mt-1">Lunch: 12:00 PM - 3:00 PM</p>
-                    <p className="text-roast">Dinner: 6:00 PM - 10:00 PM</p>
+                  <div className="ml-4">
+                    <h4 className="text-lg font-medium text-charcoal mb-1">Opening Hours</h4>
+                    <p className="text-roast">
+                      Monday - Sunday: 11:00 AM - 10:00 PM<br />
+                      <span className="italic text-sm">Kitchen closes at 9:30 PM</span>
+                    </p>
                   </div>
                 </div>
                 
                 {/* Contact */}
                 <div className="flex items-start">
-                  <div className="mr-4 mt-1 text-heritage">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                  <div className="w-10 h-10 rounded-full bg-sand flex items-center justify-center flex-shrink-0 mt-1">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M20 16.9999V19.9999C20.0011 20.1135 19.9772 20.226 19.9303 20.3296C19.8834 20.4332 19.8145 20.5255 19.7288 20.6004C19.6432 20.6753 19.5426 20.7308 19.4343 20.7631C19.326 20.7954 19.2124 20.8039 19.1 20.7889C16.44 20.4634 13.9 19.5388 11.71 18.0888C9.66 16.7588 7.93 14.9988 6.6 12.9999C5.14 10.7988 4.21 8.2499 3.89 5.5799C3.87499 5.4676 3.88371 5.35406 3.91604 5.24595C3.94837 5.13784 4.00363 5.0374 4.07839 4.9519C4.15314 4.86639 4.24505 4.79744 4.34843 4.75029C4.45182 4.70315 4.56404 4.67894 4.68 4.6799H7.68C7.88565 4.67786 8.08467 4.75519 8.23933 4.89449C8.39399 5.03378 8.49265 5.22307 8.52 5.4299C8.58 6.0509 8.7 6.6599 8.88 7.2499C8.95499 7.48057 8.9555 7.72881 8.88151 7.95972C8.80752 8.19063 8.66324 8.39021 8.47 8.5299L7.22 9.7799C8.44663 11.8894 10.1605 13.6033 12.27 14.8299L13.52 13.5799C13.6597 13.3867 13.8593 13.2424 14.0902 13.1684C14.3211 13.0944 14.5694 13.0949 14.8 13.1699C15.39 13.3499 16 13.4699 16.62 13.5299C16.829 13.5573 17.0206 13.6574 17.1611 13.8143C17.3017 13.9712 17.3805 14.1732 17.38 14.3799L17.38 16.9999H20Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
                   </div>
-                  <div>
-                    <h4 className="font-medium text-charcoal mb-1">Contact</h4>
-                    <p className="text-roast">Phone: +94 77 123 4567</p>
-                    <p className="text-roast mt-1">Email: info@indianhut.com</p>
+                  <div className="ml-4">
+                    <h4 className="text-lg font-medium text-charcoal mb-1">Contact Us</h4>
+                    <p className="text-roast">
+                      Phone: +94 91 222 3366<br />
+                      Email: info@indianhut.lk
+                    </p>
                   </div>
                 </div>
               </div>
               
-              {/* Reservation button */}
-              <motion.button
-                className="mt-8 py-3 px-6 bg-heritage text-white rounded-lg hover:bg-heritage/90 transition-colors flex items-center gap-2"
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.97 }}
-              >
-                <span>Make a Reservation</span>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M8 7V3M16 7V3M7 11H17M5 21H19C20.1046 21 21 20.1046 21 19V7C21 5.89543 20.1046 5 19 5H5C3.89543 5 3 5.89543 3 7V19C3 20.1046 3.89543 21 5 21Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </motion.button>
+              {/* Google Maps Link */}
+              <div className="mt-8 p-4 border border-gold/30 bg-gold/5 rounded-lg">
+                <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+                  <p className="text-heritage font-medium">
+                    Reservations are recommended for dinner service and weekends.
+                  </p>
+                  <Link 
+                    href={googleMapsUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 bg-heritage text-white py-2 px-4 rounded-lg hover:bg-heritage/90 transition-colors whitespace-nowrap"
+                  >
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M12 12C13.1046 12 14 11.1046 14 10C14 8.89543 13.1046 8 12 8C10.8954 8 10 8.89543 10 10C10 11.1046 10.8954 12 12 12Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      <path d="M12 22C12 22 20 16 20 10C20 5.58172 16.4183 2 12 2C7.58172 2 4 5.58172 4 10C4 16 12 22 12 22Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                    View on Google Maps
+                  </Link>
+                </div>
+              </div>
             </motion.div>
           </div>
           
-          {/* Right column - Map with parallax effect */}
-          <motion.div 
-            className="relative h-[400px] md:h-[500px] rounded-lg overflow-hidden shadow-lg"
-            style={{ scale: mapScale, opacity: mapOpacity }}
+          {/* Right column - Embedded Google Maps iframe */}
+          <motion.div
+            className="h-[400px] md:h-[500px] rounded-lg overflow-hidden relative"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, delay: 0.2 }}
           >
-            {/* Map image - replace with actual map component in production */}
-            <Image
-              src="/images/backgrounds/1.png"
-              alt="Map to Indian Hut Restaurant"
-              fill
-              className="object-cover object-center"
-            />
-            
-            {/* Location pin with animation */}
-            <motion.div 
-              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-spice"
-              initial={{ y: -20 }}
-              animate={{ y: [-20, -30, -20] }}
-              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="currentColor" stroke="none">
-                <path d="M12 0c-4.198 0-8 3.403-8 7.602 0 4.198 3.469 9.21 8 16.398 4.531-7.188 8-12.2 8-16.398 0-4.199-3.801-7.602-8-7.602zm0 11c-1.657 0-3-1.343-3-3s1.343-3 3-3 3 1.343 3 3-1.343 3-3 3z" />
-              </svg>
-              
-              {/* Ripple effect */}
-              <motion.div 
-                className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full bg-spice/30"
-                initial={{ width: 20, height: 20, opacity: 1 }}
-                animate={{ width: 60, height: 60, opacity: 0 }}
-                transition={{ duration: 2, repeat: Infinity, ease: "easeOut" }}
+            {/* Embedded Google Maps iframe */}
+            <div className="w-full h-full rounded-lg overflow-hidden relative">
+              <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3967.7848133869666!2d80.21529647480155!3d6.02424949396119!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae173a7069cd097%3A0xb6a06141163f4e94!2sIndian%20Hut!5e0!3m2!1sen!2slk!4v1750057714868!5m2!1sen!2slk" 
+                width="100%" 
+                height="100%" 
+                style={{ border: 0 }} 
+                allowFullScreen={true} 
+                loading="lazy" 
+                referrerPolicy="no-referrer-when-downgrade"
+                className="absolute inset-0"
+                title="Indian Hut Location on Google Maps"
               />
-            </motion.div>
+            </div>
             
             {/* Decorative corner frames */}
-            <div className="corner-frame-tl border-white/30"></div>
-            <div className="corner-frame-tr border-white/30"></div>
-            <div className="corner-frame-bl border-white/30"></div>
-            <div className="corner-frame-br border-white/30"></div>
+            <div className="corner-frame-tl border-heritage/30 z-10"></div>
+            <div className="corner-frame-tr border-heritage/30 z-10"></div>
+            <div className="corner-frame-bl border-heritage/30 z-10"></div>
+            <div className="corner-frame-br border-heritage/30 z-10"></div>
           </motion.div>
         </div>
       </div>

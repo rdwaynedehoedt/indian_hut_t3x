@@ -13,7 +13,6 @@ export default function Header() {
     { name: "Home", path: "/" },
     { name: "About", path: "/about" },
     { name: "Menu", path: "/menu" },
-    { name: "Gallery", path: "/gallery" },
     { name: "Visit Us", path: "/visit-us" },
   ];
 

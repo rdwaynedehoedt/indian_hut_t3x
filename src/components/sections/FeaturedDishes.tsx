@@ -5,6 +5,8 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import SectionTitle from "../ui/SectionTitle";
 import Link from "next/link";
+import Tilt from 'react-parallax-tilt';
+import ParallaxSpices from "../ui/ParallaxSpices";
 
 type Dish = {
   id: number;
@@ -70,6 +72,9 @@ export default function FeaturedDishes() {
         {/* Subtle grid pattern */}
         <div className="absolute inset-0 bg-grid-pattern opacity-[0.03]" />
         
+        {/* Parallax floating spices */}
+        <ParallaxSpices />
+        
         {/* Decorative spice illustration */}
         <div className="absolute bottom-10 left-10 w-32 h-32 opacity-[0.07]">
           <Image 
@@ -92,75 +97,84 @@ export default function FeaturedDishes() {
           {featuredDishes.map((dish, index) => (
             <motion.div
               key={dish.id}
-              className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              onMouseEnter={() => setActiveIndex(index)}
-              onMouseLeave={() => setActiveIndex(null)}
             >
-              {/* Dish image with hover effect */}
-              <div className="relative h-48 overflow-hidden">
-                <motion.div
-                  className="absolute inset-0"
-                  animate={{ 
-                    scale: activeIndex === index ? 1.05 : 1
-                  }}
-                  transition={{ duration: 0.4 }}
-                >
-                  <Image
-                    src={dish.image}
-                    alt={dish.name}
-                    fill
-                    className="object-cover"
-                  />
-                </motion.div>
-                
-                {/* Category badge */}
-                <div className="absolute top-4 left-4 px-3 py-1 bg-white/80 backdrop-blur-sm rounded-full text-xs font-medium">
-                  {dish.category === "vegetarian" && (
-                    <span className="text-green-600">Vegetarian</span>
-                  )}
-                  {dish.category === "non-vegetarian" && (
-                    <span className="text-red-600">Non-Vegetarian</span>
-                  )}
-                  {dish.category === "seafood" && (
-                    <span className="text-blue-600">Seafood</span>
-                  )}
-                  {dish.category === "dessert" && (
-                    <span className="text-purple-600">Dessert</span>
-                  )}
-                </div>
-                
-                {/* Spice level indicator */}
-                <div className="absolute bottom-4 right-4 flex items-center gap-0.5">
-                  {[...Array(3)].map((_, i) => (
-                    <div 
-                      key={i} 
-                      className={`w-2 h-2 rounded-full ${i < dish.spiceLevel ? 'bg-spice' : 'bg-white/50'}`}
+              <Tilt
+                className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow"
+                tiltMaxAngleX={8}
+                tiltMaxAngleY={8}
+                perspective={1000}
+                transitionSpeed={1500}
+                scale={1.02}
+                gyroscope={true}
+                onEnter={() => setActiveIndex(index)}
+                onLeave={() => setActiveIndex(null)}
+              >
+                {/* Dish image with hover effect */}
+                <div className="relative h-48 overflow-hidden">
+                  <motion.div
+                    className="absolute inset-0"
+                    animate={{ 
+                      scale: activeIndex === index ? 1.05 : 1
+                    }}
+                    transition={{ duration: 0.4 }}
+                  >
+                    <Image
+                      src={dish.image}
+                      alt={dish.name}
+                      fill
+                      className="object-cover"
                     />
-                  ))}
+                  </motion.div>
+                  
+                  {/* Category badge */}
+                  <div className="absolute top-4 left-4 px-3 py-1 bg-white/80 backdrop-blur-sm rounded-full text-xs font-medium">
+                    {dish.category === "vegetarian" && (
+                      <span className="text-green-600">Vegetarian</span>
+                    )}
+                    {dish.category === "non-vegetarian" && (
+                      <span className="text-red-600">Non-Vegetarian</span>
+                    )}
+                    {dish.category === "seafood" && (
+                      <span className="text-blue-600">Seafood</span>
+                    )}
+                    {dish.category === "dessert" && (
+                      <span className="text-purple-600">Dessert</span>
+                    )}
+                  </div>
+                  
+                  {/* Spice level indicator */}
+                  <div className="absolute bottom-4 right-4 flex items-center gap-0.5">
+                    {[...Array(3)].map((_, i) => (
+                      <div 
+                        key={i} 
+                        className={`w-2 h-2 rounded-full ${i < dish.spiceLevel ? 'bg-spice' : 'bg-white/50'}`}
+                      />
+                    ))}
+                  </div>
                 </div>
-              </div>
-              
-              {/* Dish details */}
-              <div className="p-5">
-                <div className="flex justify-between items-start mb-2">
-                  <h3 className="font-playfair text-lg text-charcoal">{dish.name}</h3>
-                  <span className="text-gold font-medium">{dish.price}</span>
-                </div>
-                <p className="text-roast text-sm">{dish.description}</p>
                 
-                {/* Interactive order button */}
-                <motion.button
-                  className="mt-4 w-full py-2 px-4 bg-sand-dark text-charcoal text-sm font-medium rounded hover:bg-heritage hover:text-white transition-colors"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  View Details
-                </motion.button>
-              </div>
+                {/* Dish details */}
+                <div className="p-5">
+                  <div className="flex justify-between items-start mb-2">
+                    <h3 className="font-playfair text-lg text-charcoal">{dish.name}</h3>
+                    <span className="text-gold font-medium">{dish.price}</span>
+                  </div>
+                  <p className="text-roast text-sm">{dish.description}</p>
+                  
+                  {/* Interactive order button */}
+                  <motion.button
+                    className="mt-4 w-full py-2 px-4 bg-sand-dark text-charcoal text-sm font-medium rounded hover:bg-heritage hover:text-white transition-colors"
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    View Details
+                  </motion.button>
+                </div>
+              </Tilt>
             </motion.div>
           ))}
         </div>

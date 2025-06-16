@@ -60,10 +60,6 @@ export default function AboutSection() {
                 playsInline
                 className="w-full h-full object-cover"
                 poster="/images/gallery/hand-drawn-black-hotel-labels-vintage-style 1.PNG"
-                style={{ 
-                  transform: "scale(1.05)",
-                  filter: "brightness(0.95) contrast(1.05)"
-                }}
               >
                 <source src="/10200309-hd_2160_3840_25fps.mp4" type="video/mp4" />
                 Your browser does not support the video tag.
@@ -128,4 +124,12 @@ export default function AboutSection() {
                 transition={{ duration: 0.7, delay: 0.5 }}
               >
                 <div className="h-px w-12 bg-gold/40 mr-4"></div>
-                <span className="text-heritage italic font-playfair">The t
+                <span className="text-heritage italic font-playfair">The taste of heritage</span>
+              </motion.div>
+            </motion.div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+} 
