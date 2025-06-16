@@ -20,6 +20,13 @@ export default function Hero() {
     const lighthouseElement = containerRef.current.querySelector('.lighthouse-element');
     const lighthouseLabel = containerRef.current.querySelector('.lighthouse-label');
     const castleElement = containerRef.current.querySelector('.castle-element');
+    const hamsaElement = containerRef.current.querySelector('.hamsa-element');
+    const foodIcon1 = containerRef.current.querySelector('.food-icon-1');
+    const foodIcon2 = containerRef.current.querySelector('.food-icon-2');
+    const foodIcon3 = containerRef.current.querySelector('.food-icon-3');
+    const foodIcon4 = containerRef.current.querySelector('.food-icon-4');
+    const foodIcon5 = containerRef.current.querySelector('.food-icon-5');
+    const foodIcon6 = containerRef.current.querySelector('.food-icon-6');
     
     // Enhanced lighthouse animation - rising from bottom with 3D effect
     gsap.fromTo(lighthouseElement, 
@@ -94,6 +101,153 @@ export default function Hero() {
       ease: "sine.inOut",
       delay: 3.2
     });
+    
+    // Hamsa hand animation
+    gsap.fromTo(hamsaElement, 
+      { 
+        opacity: 0, 
+        scale: 0.7,
+        y: 10
+      },
+      { 
+        opacity: 0.9, 
+        scale: 1,
+        y: 0,
+        duration: 1.5,
+        ease: "power2.out",
+        delay: 2.0
+      }
+    );
+    
+    // Food icons animations
+    gsap.fromTo(foodIcon1,
+      { opacity: 0, scale: 0.7, rotation: -10 },
+      { 
+        opacity: 0.85, 
+        scale: 1, 
+        rotation: 0, 
+        duration: 1.5,
+        ease: "back.out(1.2)",
+        delay: 2.2
+      }
+    );
+    
+    gsap.fromTo(foodIcon2,
+      { opacity: 0, scale: 0.7, rotation: 10 },
+      { 
+        opacity: 0.85, 
+        scale: 1, 
+        rotation: 0, 
+        duration: 1.5,
+        ease: "back.out(1.2)",
+        delay: 2.4
+      }
+    );
+    
+    gsap.fromTo(foodIcon3,
+      { opacity: 0, scale: 0.7, rotation: -5 },
+      { 
+        opacity: 0.85, 
+        scale: 1, 
+        rotation: 0, 
+        duration: 1.5,
+        ease: "back.out(1.2)",
+        delay: 2.6
+      }
+    );
+    
+    // Additional food icons animations
+    gsap.fromTo(foodIcon4,
+      { opacity: 0, scale: 0.7, rotation: 8 },
+      { 
+        opacity: 0.85, 
+        scale: 1, 
+        rotation: 0, 
+        duration: 1.5,
+        ease: "back.out(1.2)",
+        delay: 2.8
+      }
+    );
+    
+    gsap.fromTo(foodIcon5,
+      { opacity: 0, scale: 0.7, rotation: -8 },
+      { 
+        opacity: 0.85, 
+        scale: 1, 
+        rotation: 0, 
+        duration: 1.5,
+        ease: "back.out(1.2)",
+        delay: 3.0
+      }
+    );
+    
+    gsap.fromTo(foodIcon6,
+      { opacity: 0, scale: 0.7, rotation: 5 },
+      { 
+        opacity: 0.85, 
+        scale: 1, 
+        rotation: 0, 
+        duration: 1.5,
+        ease: "back.out(1.2)",
+        delay: 3.2
+      }
+    );
+    
+    // Subtle floating animation for food icons
+    gsap.to(foodIcon1, {
+      y: "-8px",
+      duration: 3,
+      repeat: -1,
+      yoyo: true,
+      ease: "sine.inOut",
+      delay: 3.8
+    });
+    
+    gsap.to(foodIcon2, {
+      y: "-6px",
+      duration: 2.5,
+      repeat: -1,
+      yoyo: true,
+      ease: "sine.inOut",
+      delay: 4
+    });
+    
+    gsap.to(foodIcon3, {
+      y: "-7px",
+      duration: 3.2,
+      repeat: -1,
+      yoyo: true,
+      ease: "sine.inOut",
+      delay: 3.5
+    });
+    
+    // Subtle floating animation for additional food icons
+    gsap.to(foodIcon4, {
+      y: "-5px",
+      duration: 2.8,
+      repeat: -1,
+      yoyo: true,
+      ease: "sine.inOut",
+      delay: 4.2
+    });
+    
+    gsap.to(foodIcon5, {
+      y: "-7px",
+      duration: 3.4,
+      repeat: -1,
+      yoyo: true,
+      ease: "sine.inOut",
+      delay: 4.4
+    });
+    
+    gsap.to(foodIcon6, {
+      y: "-6px",
+      duration: 3.0,
+      repeat: -1,
+      yoyo: true,
+      ease: "sine.inOut",
+      delay: 4.6
+    });
   }, []);
 
   return (
@@ -127,6 +281,98 @@ export default function Hero() {
           animate={{ scale: 1 }}
           transition={{ duration: 8, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" }}
         />
+      </div>
+      
+      {/* Removed Hamsa and Diya from here */}
+      
+      {/* Food Icon 1 - Floating food element */}
+      <div className="absolute top-32 right-[30%] w-12 md:w-14 lg:w-16 food-icon-1 opacity-0 z-[2]">
+        <div className="relative w-full aspect-square">
+          <Image 
+            src="/images/icons/food-icon-7.png" 
+            alt="Indian Food" 
+            fill
+            className="object-contain object-center"
+            style={{ 
+              filter: "drop-shadow(0 3px 5px rgba(0,0,0,0.15))"
+            }}
+          />
+        </div>
+      </div>
+      
+      {/* Food Icon 2 - Floating food element */}
+      <div className="absolute bottom-32 left-[20%] w-12 md:w-14 lg:w-16 food-icon-2 opacity-0 z-[2]">
+        <div className="relative w-full aspect-square">
+          <Image 
+            src="/images/icons/food-icon-3.png" 
+            alt="Indian Food" 
+            fill
+            className="object-contain object-center"
+            style={{ 
+              filter: "drop-shadow(0 3px 5px rgba(0,0,0,0.15))"
+            }}
+          />
+        </div>
+      </div>
+      
+      {/* Food Icon 3 - Floating food element */}
+      <div className="absolute top-48 left-[25%] w-12 md:w-14 lg:w-16 food-icon-3 opacity-0 z-[2]">
+        <div className="relative w-full aspect-square">
+          <Image 
+            src="/images/icons/food-icon-1.png" 
+            alt="Indian Food" 
+            fill
+            className="object-contain object-center"
+            style={{ 
+              filter: "drop-shadow(0 3px 5px rgba(0,0,0,0.15))"
+            }}
+          />
+        </div>
+      </div>
+      
+      {/* Food Icon 4 - Floating food element */}
+      <div className="absolute top-24 left-[10%] w-10 md:w-12 lg:w-14 food-icon-4 opacity-0 z-[2]">
+        <div className="relative w-full aspect-square">
+          <Image 
+            src="/images/icons/food-icon-9.png" 
+            alt="Indian Food" 
+            fill
+            className="object-contain object-center"
+            style={{ 
+              filter: "drop-shadow(0 3px 5px rgba(0,0,0,0.15))"
+            }}
+          />
+        </div>
+      </div>
+      
+      {/* Food Icon 5 - Floating food element */}
+      <div className="absolute bottom-48 right-[15%] w-10 md:w-12 lg:w-14 food-icon-5 opacity-0 z-[2]">
+        <div className="relative w-full aspect-square">
+          <Image 
+            src="/images/icons/food-icon-16.png" 
+            alt="Indian Food" 
+            fill
+            className="object-contain object-center"
+            style={{ 
+              filter: "drop-shadow(0 3px 5px rgba(0,0,0,0.15))"
+            }}
+          />
+        </div>
+      </div>
+      
+      {/* Food Icon 6 - Floating food element */}
+      <div className="absolute top-40 right-[12%] w-10 md:w-11 lg:w-12 food-icon-6 opacity-0 z-[2]">
+        <div className="relative w-full aspect-square">
+          <Image 
+            src="/images/icons/food-icon-5.png" 
+            alt="Indian Food" 
+            fill
+            className="object-contain object-center"
+            style={{ 
+              filter: "drop-shadow(0 3px 5px rgba(0,0,0,0.15))"
+            }}
+          />
+        </div>
       </div>
       
       {/* Galle Fort Lighthouse - bigger and with 3D effect */}
@@ -288,6 +534,21 @@ export default function Hero() {
             <div className="h-0.5 w-6 bg-gold/40"></div>
             <div className="h-0.5 w-2 bg-gold/40"></div>
           </motion.div>
+          
+          {/* Hamsa Hand (Palm) - Indian decorative element */}
+          <div className="mt-4 w-12 md:w-14 lg:w-16 hamsa-element opacity-0 z-[3]">
+            <div className="relative w-full aspect-square">
+              <Image 
+                src="/images/decorative/decorative-element-2.png" 
+                alt="Hamsa Hand" 
+                fill
+                className="object-contain object-center"
+                style={{ 
+                  filter: "drop-shadow(0 3px 6px rgba(0,0,0,0.15))"
+                }}
+              />
+            </div>
+          </div>
         </motion.div>
 
         {/* Right column */}
