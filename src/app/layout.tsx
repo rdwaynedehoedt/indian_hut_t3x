@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Playfair_Display } from "next/font/google";
 import Header from "../components/layout/Header";
@@ -25,6 +25,13 @@ const playfair = Playfair_Display({
 export const metadata: Metadata = {
   title: "Indian Hut | Heritage Restaurant - Galle Fort",
   description: "A heritage-inspired café and restaurant blending old-world charm with modern minimalism in the heart of Galle Fort, Sri Lanka.",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  userScalable: true,
 };
 
 export default function RootLayout({

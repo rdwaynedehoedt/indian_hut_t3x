@@ -215,7 +215,7 @@ export default function Hero() {
   return (
     <motion.section 
       ref={containerRef}
-      className="min-h-screen flex flex-col justify-center px-6 md:px-12 lg:px-24 py-32 relative overflow-hidden"
+      className="min-h-screen flex flex-col justify-center px-4 sm:px-6 md:px-12 lg:px-24 py-16 md:py-32 relative overflow-hidden"
       initial={{ opacity: 0 }}
       style={{ opacity: 0 }}
     >
@@ -244,10 +244,8 @@ export default function Hero() {
         />
       </div>
       
-      {/* Removed Hamsa and Diya from here */}
-      
-      {/* Food Icon 1 - Floating food element */}
-      <div className="absolute top-32 right-[30%] w-12 md:w-14 lg:w-16 food-icon-1 opacity-0 z-[2]">
+      {/* Food Icon 1 - Floating food element - adjusted for mobile */}
+      <div className="absolute top-20 md:top-32 right-[15%] md:right-[30%] w-10 sm:w-12 md:w-14 lg:w-16 food-icon-1 opacity-0 z-[2]">
         <div className="relative w-full aspect-square">
           <Image 
             src="/images/icons/food-icon-7.png" 
@@ -261,8 +259,8 @@ export default function Hero() {
         </div>
       </div>
       
-      {/* Food Icon 2 - Floating food element */}
-      <div className="absolute bottom-32 left-[20%] w-12 md:w-14 lg:w-16 food-icon-2 opacity-0 z-[2]">
+      {/* Food Icon 2 - Floating food element - adjusted for mobile */}
+      <div className="absolute bottom-16 md:bottom-32 left-[10%] md:left-[20%] w-10 sm:w-12 md:w-14 lg:w-16 food-icon-2 opacity-0 z-[2]">
         <div className="relative w-full aspect-square">
           <Image 
             src="/images/icons/food-icon-3.png" 
@@ -276,8 +274,8 @@ export default function Hero() {
         </div>
       </div>
       
-      {/* Food Icon 3 - Floating food element */}
-      <div className="absolute top-48 left-[25%] w-12 md:w-14 lg:w-16 food-icon-3 opacity-0 z-[2]">
+      {/* Food Icon 3 - Floating food element - adjusted for mobile */}
+      <div className="absolute top-32 md:top-48 left-[20%] md:left-[25%] w-10 sm:w-12 md:w-14 lg:w-16 food-icon-3 opacity-0 z-[2]">
         <div className="relative w-full aspect-square">
           <Image 
             src="/images/icons/food-icon-1.png" 
@@ -291,8 +289,8 @@ export default function Hero() {
         </div>
       </div>
       
-      {/* Food Icon 4 - Floating food element */}
-      <div className="absolute top-24 left-[10%] w-10 md:w-12 lg:w-14 food-icon-4 opacity-0 z-[2]">
+      {/* Food Icon 4 - Floating food element - adjusted for mobile */}
+      <div className="absolute top-10 md:top-24 left-[8%] md:left-[10%] w-8 sm:w-10 md:w-12 lg:w-14 food-icon-4 opacity-0 z-[2]">
         <div className="relative w-full aspect-square">
           <Image 
             src="/images/icons/food-icon-9.png" 
@@ -306,8 +304,8 @@ export default function Hero() {
         </div>
       </div>
       
-      {/* Food Icon 5 - Floating food element */}
-      <div className="absolute bottom-48 right-[15%] w-10 md:w-12 lg:w-14 food-icon-5 opacity-0 z-[2]">
+      {/* Food Icon 5 - Floating food element - adjusted for mobile */}
+      <div className="absolute bottom-24 md:bottom-48 right-[12%] md:right-[15%] w-8 sm:w-10 md:w-12 lg:w-14 food-icon-5 opacity-0 z-[2]">
         <div className="relative w-full aspect-square">
           <Image 
             src="/images/icons/food-icon-16.png" 
@@ -321,8 +319,8 @@ export default function Hero() {
         </div>
       </div>
       
-      {/* Food Icon 6 - Floating food element */}
-      <div className="absolute top-40 right-[12%] w-10 md:w-11 lg:w-12 food-icon-6 opacity-0 z-[2]">
+      {/* Food Icon 6 - Floating food element - adjusted for mobile */}
+      <div className="absolute top-24 md:top-40 right-[8%] md:right-[12%] w-8 sm:w-10 md:w-11 lg:w-12 food-icon-6 opacity-0 z-[2]">
         <div className="relative w-full aspect-square">
           <Image 
             src="/images/icons/food-icon-5.png" 
@@ -336,8 +334,8 @@ export default function Hero() {
         </div>
       </div>
       
-      {/* Galle Fort Lighthouse - bigger and with 3D effect */}
-      <div className="absolute -bottom-10 right-0 w-48 md:w-72 lg:w-96 h-[400px] md:h-[600px] lg:h-[800px] lighthouse-element opacity-0 z-[2] perspective-[1000px] transform-gpu">
+      {/* Galle Fort Lighthouse - adjusted for mobile */}
+      <div className="absolute -bottom-4 md:-bottom-10 right-0 w-32 sm:w-40 md:w-72 lg:w-96 h-[250px] sm:h-[350px] md:h-[600px] lg:h-[800px] lighthouse-element opacity-0 z-[2] perspective-[1000px] transform-gpu">
         <div className="relative w-full h-full drop-shadow-2xl">
           <Image 
             src="/images/gallery/lighthouse.png" 
@@ -352,8 +350,8 @@ export default function Hero() {
         </div>
       </div>
       
-      {/* German Castle - on left side with 3D effect */}
-      <div className="absolute -bottom-10 left-0 w-48 md:w-72 lg:w-96 h-[400px] md:h-[600px] lg:h-[800px] castle-element opacity-0 z-[2] perspective-[1000px] transform-gpu">
+      {/* German Castle - adjusted for mobile */}
+      <div className="absolute -bottom-4 md:-bottom-10 left-0 w-32 sm:w-40 md:w-72 lg:w-96 h-[250px] sm:h-[350px] md:h-[600px] lg:h-[800px] castle-element opacity-0 z-[2] perspective-[1000px] transform-gpu">
         <div className="relative w-full h-full drop-shadow-2xl">
           <Image 
             src="/images/backgrounds/germany-drawn-seamless-pattern 1 (1).png" 
@@ -368,7 +366,7 @@ export default function Hero() {
         </div>
       </div>
       
-      {/* Curved arrow pointing to lighthouse with elegant text */}
+      {/* Curved arrow pointing to lighthouse with elegant text - hidden on smaller screens */}
       <div className="absolute bottom-[18%] right-[18%] md:right-[22%] lg:right-[18%] z-[3] hidden md:block lighthouse-label opacity-0">
         <div className="relative">
           {/* Curved arrow SVG */}
@@ -407,7 +405,7 @@ export default function Hero() {
       </div>
       
       {/* Sri Lankan coastline silhouette */}
-      <div className="absolute bottom-0 left-0 right-0 h-16 overflow-hidden z-[1] opacity-10">
+      <div className="absolute bottom-0 left-0 right-0 h-10 md:h-16 overflow-hidden z-[1] opacity-10">
         <svg viewBox="0 0 1200 100" className="w-full h-full">
           <path 
             d="M0,50 C100,80 200,30 300,50 C400,70 500,20 600,40 C700,60 800,30 900,50 C1000,70 1100,40 1200,60 L1200,100 L0,100 Z" 
@@ -419,11 +417,11 @@ export default function Hero() {
       
       {/* Main content */}
       <motion.div 
-        className="flex flex-col md:flex-row items-center justify-between w-full h-full flex-1 gap-8 md:gap-4 z-10 mt-24 md:mt-28"
+        className="flex flex-col md:flex-row items-center justify-between w-full h-full flex-1 gap-6 md:gap-8 z-10 mt-8 md:mt-24 lg:mt-28"
         style={{ opacity: textOpacity, y: textY }}
       >
-        {/* Left column */}
-        <div className="w-full md:w-1/3 text-roast text-base md:text-lg font-light relative text-column-left opacity-0">
+        {/* Left column - hidden on mobile */}
+        <div className="hidden md:block w-full md:w-1/3 text-roast text-base md:text-lg font-light relative text-column-left opacity-0">
           <div className="relative pl-4 md:pl-6">
             <div className="absolute left-0 top-0 h-full w-0.5 bg-heritage/10"></div>
             <p className="leading-relaxed">
@@ -431,46 +429,46 @@ export default function Hero() {
             </p>
             
             {/* Modern accent element */}
-            <div className="mt-6 opacity-0 h-0.5 w-12 bg-gold/40"></div>
+            <div className="mt-4 md:mt-6 opacity-0 h-0.5 w-12 bg-gold/40"></div>
           </div>
         </div>
 
         {/* Center column */}
-        <div className="w-full md:w-1/3 text-center flex flex-col items-center justify-center gap-3 relative text-column-center opacity-0">
+        <div className="w-full md:w-1/3 text-center flex flex-col items-center justify-center gap-2 md:gap-3 relative text-column-center opacity-0">
           <div className="text-gold">
             <svg 
               xmlns="http://www.w3.org/2000/svg" 
               viewBox="0 0 24 24" 
               fill="currentColor" 
-              className="w-6 h-6"
+              className="w-5 h-5 md:w-6 md:h-6"
             >
               <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
             </svg>
           </div>
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-playfair text-charcoal tracking-wider heritage-spacing relative">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-playfair text-charcoal tracking-wider heritage-spacing relative">
             <span className="relative inline-block">
               INDIAN HUT
               <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gold/30 origin-left scale-x-0"></span>
             </span>
           </h1>
           <div className="flex flex-col items-center">
-            <span className="text-base md:text-lg text-charcoal tracking-widest font-medium">
+            <span className="text-sm sm:text-base md:text-lg text-charcoal tracking-widest font-medium">
               HERITAGE
             </span>
-            <span className="text-xs md:text-sm text-charcoal tracking-wider mt-1">
+            <span className="text-xs md:text-sm text-charcoal tracking-wider mt-0.5 md:mt-1">
               SINCE 1986
             </span>
           </div>
           
           {/* Modern decorative element */}
-          <div className="mt-3 opacity-0 flex gap-1">
+          <div className="mt-2 md:mt-3 opacity-0 flex gap-1">
             <div className="h-0.5 w-2 bg-gold/40"></div>
             <div className="h-0.5 w-6 bg-gold/40"></div>
             <div className="h-0.5 w-2 bg-gold/40"></div>
           </div>
           
           {/* Hamsa Hand (Palm) - Indian decorative element */}
-          <div className="mt-4 w-12 md:w-14 lg:w-16 hamsa-element opacity-0 z-[3]">
+          <div className="mt-3 md:mt-4 w-10 sm:w-12 md:w-14 lg:w-16 hamsa-element opacity-0 z-[3]">
             <div className="relative w-full aspect-square">
               <Image 
                 src="/images/decorative/decorative-element-2.png" 
@@ -485,8 +483,8 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Right column */}
-        <div className="w-full md:w-1/3 text-charcoal text-base md:text-lg font-light text-right relative text-column-right opacity-0">
+        {/* Right column - hidden on mobile */}
+        <div className="hidden md:block w-full md:w-1/3 text-charcoal text-base md:text-lg font-light text-right relative text-column-right opacity-0">
           <div className="relative pr-4 md:pr-6">
             <div className="absolute right-0 top-0 h-full w-0.5 bg-heritage/10"></div>
             <p className="leading-relaxed">
@@ -494,7 +492,7 @@ export default function Hero() {
             </p>
             
             {/* Modern accent element */}
-            <div className="mt-6 opacity-0 flex justify-end">
+            <div className="mt-4 md:mt-6 opacity-0 flex justify-end">
               <div className="h-0.5 w-12 bg-gold/40"></div>
             </div>
           </div>
@@ -502,14 +500,14 @@ export default function Hero() {
       </motion.div>
 
       {/* Scroll down arrow with better centering */}
-      <div className="flex justify-center mt-24 z-10 scroll-indicator opacity-0">
+      <div className="flex justify-center mt-10 md:mt-24 z-10 scroll-indicator opacity-0">
         <button
           className="text-charcoal hover-heritage transition-soft focus:outline-none relative flex flex-col items-center"
           aria-label="Scroll down"
         >
-          <div className="absolute -top-10 left-1/2 transform -translate-x-1/2 w-px h-6 bg-gold/30 origin-bottom scale-y-0"></div>
+          <div className="absolute -top-6 md:-top-10 left-1/2 transform -translate-x-1/2 w-px h-4 md:h-6 bg-gold/30 origin-bottom scale-y-0"></div>
           <span className="text-xs tracking-widest text-charcoal/50 mb-2 font-light">EXPLORE</span>
-          <ChevronDown size={24} className="text-gold" />
+          <ChevronDown size={20} className="text-gold" />
         </button>
       </div>
     </motion.section>
