@@ -26,97 +26,147 @@ export default function Hero() {
     // Mark that we've started the animations
     hasAnimated.current = true;
     
-    const lighthouseElement = containerRef.current.querySelector('.lighthouse-element');
-    const lighthouseLabel = containerRef.current.querySelector('.lighthouse-label');
-    const castleElement = containerRef.current.querySelector('.castle-element');
-    const hamsaElement = containerRef.current.querySelector('.hamsa-element');
-    const foodIcon1 = containerRef.current.querySelector('.food-icon-1');
-    const foodIcon2 = containerRef.current.querySelector('.food-icon-2');
-    const foodIcon3 = containerRef.current.querySelector('.food-icon-3');
-    const foodIcon4 = containerRef.current.querySelector('.food-icon-4');
-    const foodIcon5 = containerRef.current.querySelector('.food-icon-5');
-    const foodIcon6 = containerRef.current.querySelector('.food-icon-6');
+    const container = containerRef.current; // Store reference to avoid null checks
+    
+    const lighthouseElement = container.querySelector('.lighthouse-element');
+    const castleElement = container.querySelector('.castle-element');
+    const hamsaElement = container.querySelector('.hamsa-element');
+    const foodIcon1 = container.querySelector('.food-icon-1');
+    const foodIcon2 = container.querySelector('.food-icon-2');
+    const foodIcon3 = container.querySelector('.food-icon-3');
+    const foodIcon4 = container.querySelector('.food-icon-4');
+    const foodIcon5 = container.querySelector('.food-icon-5');
+    const foodIcon6 = container.querySelector('.food-icon-6');
+    // Mobile-only food icons
+    const foodIcon7 = container.querySelector('.food-icon-7');
+    const foodIcon8 = container.querySelector('.food-icon-8');
+    const foodIcon9 = container.querySelector('.food-icon-9');
+    const foodIcon10 = container.querySelector('.food-icon-10');
+    const titleElement = container.querySelector('.title-element');
+    const subtitleElement = container.querySelector('.subtitle-element');
+    const taglineElement = container.querySelector('.tagline-element');
+    const accentLine = container.querySelector('.accent-line');
+    
+    // Check if we're on mobile
+    const isMobile = window.innerWidth < 768;
+    const mobileDelay = isMobile ? 0.2 : 0.4;
+    const mobileAnimationSpeed = isMobile ? 1.8 : 2.5;
     
     // Reveal the hero section first
-    gsap.to(containerRef.current, {
+    gsap.to(container, {
       opacity: 1,
       duration: 0.8,
       ease: "power2.out",
       onComplete: () => {
         // Start all other animations after hero section is visible
         
-        // Enhanced lighthouse animation - rising from bottom with 3D effect
-        gsap.fromTo(lighthouseElement, 
-          { 
-            opacity: 0, 
-            y: 200, 
-            scale: 0.85,
-            rotationY: -10,
-            transformOrigin: "bottom center"
-          },
+        // Title animation
+        gsap.fromTo(titleElement,
+          { opacity: 0, y: 30 },
           { 
             opacity: 1, 
             y: 0, 
-            scale: 1,
-            rotationY: 0,
-            duration: 2.5,
-            ease: "power3.out",
-            delay: 0.4
-          }
-        );
-        
-        // Castle animation - rising from bottom with 3D effect
-        gsap.fromTo(castleElement, 
-          { 
-            opacity: 0, 
-            y: 200, 
-            scale: 0.85,
-            rotationY: 10,
-            transformOrigin: "bottom center"
-          },
-          { 
-            opacity: 1, 
-            y: 0, 
-            scale: 1,
-            rotationY: 0,
-            duration: 2.5,
+            duration: 1.2,
             ease: "power3.out",
             delay: 0.2
           }
         );
         
-        // Lighthouse label animation
-        gsap.fromTo(lighthouseLabel,
-          { opacity: 0, x: -20 },
+        // Subtitle animation with stagger
+        gsap.fromTo(subtitleElement,
+          { opacity: 0, y: 20 },
           { 
             opacity: 1, 
-            x: 0, 
-            duration: 1.5,
+            y: 0, 
+            duration: 1,
             ease: "power2.out",
-            delay: 2.0
+            delay: 0.6
           }
         );
         
-        // Continuous subtle floating animation for lighthouse
-        gsap.to(lighthouseElement, {
-          y: "-15px",
-          rotationY: 3,
-          duration: 4,
-          repeat: -1,
-          yoyo: true,
-          ease: "sine.inOut",
-          delay: 2.9
-        });
+        // Tagline animation
+        gsap.fromTo(taglineElement,
+          { opacity: 0, y: 15 },
+          { 
+            opacity: 1, 
+            y: 0, 
+            duration: 0.8,
+            ease: "power2.out",
+            delay: 0.9
+          }
+        );
         
-        // Continuous subtle floating animation for castle
-        gsap.to(castleElement, {
-          y: "-12px",
-          rotationY: -3,
-          duration: 3.5,
+        // Accent line animation
+        gsap.fromTo(accentLine,
+          { scaleX: 0 },
+          { 
+            scaleX: 1, 
+            duration: 1.2,
+            ease: "power3.inOut",
+            delay: 1.2
+          }
+        );
+    
+    // Enhanced lighthouse animation - rising from bottom with 3D effect
+    gsap.fromTo(lighthouseElement, 
+      { 
+        opacity: 0, 
+            y: isMobile ? 100 : 200, 
+        scale: 0.85,
+        rotationY: -10,
+        transformOrigin: "bottom center"
+      },
+      { 
+        opacity: 1, 
+        y: 0, 
+        scale: 1,
+        rotationY: 0,
+            duration: mobileAnimationSpeed,
+        ease: "power3.out",
+            delay: mobileDelay
+      }
+    );
+    
+    // Castle animation - rising from bottom with 3D effect
+    gsap.fromTo(castleElement, 
+      { 
+        opacity: 0, 
+            y: isMobile ? 100 : 200, 
+        scale: 0.85,
+        rotationY: 10,
+        transformOrigin: "bottom center"
+      },
+      { 
+        opacity: 1, 
+        y: 0, 
+        scale: 1,
+        rotationY: 0,
+            duration: mobileAnimationSpeed,
+        ease: "power3.out",
+            delay: mobileDelay * 0.5
+      }
+    );
+    
+    // Continuous subtle floating animation for lighthouse
+    gsap.to(lighthouseElement, {
+          y: isMobile ? "-10px" : "-15px",
+      rotationY: 3,
+          duration: isMobile ? 3 : 4,
+      repeat: -1,
+      yoyo: true,
+      ease: "sine.inOut",
+          delay: isMobile ? 2.0 : 2.9
+    });
+    
+    // Continuous subtle floating animation for castle
+    gsap.to(castleElement, {
+          y: isMobile ? "-8px" : "-12px",
+      rotationY: -3,
+          duration: isMobile ? 2.8 : 3.5,
           repeat: -1,
           yoyo: true,
           ease: "sine.inOut",
-          delay: 2.7
+          delay: isMobile ? 1.8 : 2.7
         });
         
         // Hamsa hand animation
@@ -132,12 +182,17 @@ export default function Hero() {
             y: 0,
             duration: 1.5,
             ease: "power2.out",
-            delay: 1.0
+            delay: isMobile ? 0.5 : 1.0
           }
         );
         
-        // Food icons animations - staggered for visual interest
+                // Food icons animations - staggered for visual interest
         const foodIcons = [foodIcon1, foodIcon2, foodIcon3, foodIcon4, foodIcon5, foodIcon6];
+        
+        // Add mobile-only food icons
+        if (isMobile) {
+          foodIcons.push(foodIcon7, foodIcon8, foodIcon9, foodIcon10);
+        }
         
         foodIcons.forEach((icon, index) => {
           if (!icon) return;
@@ -155,62 +210,76 @@ export default function Hero() {
               rotation: 0, 
               duration: 1.5,
               ease: "back.out(1.2)",
-              delay: 1.2 + (index * 0.2) // Staggered delay
+              delay: isMobile ? 0.3 + (index * 0.15) : 1.2 + (index * 0.2) // Faster staggered delay on mobile
             }
           );
           
           // Subtle floating animation with random parameters
           gsap.to(icon, {
-            y: `-${5 + Math.floor(Math.random() * 5)}px`,
-            duration: 2.5 + (Math.random() * 1.5),
+            y: `-${isMobile ? (3 + Math.floor(Math.random() * 3)) : (5 + Math.floor(Math.random() * 5))}px`,
+            duration: isMobile ? 2.0 + (Math.random() * 1.0) : 2.5 + (Math.random() * 1.5),
             repeat: -1,
             yoyo: true,
             ease: "sine.inOut",
-            delay: 3.0 + (index * 0.3)
+            delay: isMobile ? 1.5 + (index * 0.2) : 3.0 + (index * 0.3)
           });
         });
         
-        // Animate in the text columns
-        if (containerRef.current) {
-          const textColumns = [
-            containerRef.current.querySelector('.text-column-left'),
-            containerRef.current.querySelector('.text-column-center'),
-            containerRef.current.querySelector('.text-column-right')
-          ];
+        // Animate scroll indicator
+        const scrollIndicator = container.querySelector('.scroll-indicator');
+        if (scrollIndicator) {
+          gsap.fromTo(scrollIndicator,
+            { opacity: 0 },
+            { 
+              opacity: 1, 
+              duration: 1,
+              ease: "power1.inOut",
+              delay: isMobile ? 1.2 : 2.0
+            }
+          );
           
-          textColumns.forEach((column, index) => {
-            if (!column) return;
-            
-            gsap.fromTo(column,
-              { opacity: 0, y: 20 },
-              { 
-                opacity: 1, 
-                y: 0, 
-                duration: 0.8,
-                ease: "power2.out",
-                delay: 0.3 + (index * 0.2)
-              }
-            );
-          });
-          
-          // Animate scroll indicator
-          const scrollIndicator = containerRef.current.querySelector('.scroll-indicator');
-          if (scrollIndicator) {
-            gsap.fromTo(scrollIndicator,
-              { opacity: 0 },
-              { 
-                opacity: 1, 
-                duration: 0.5,
-                ease: "power2.out",
-                delay: 2.2
-              }
-            );
-          }
+                  // Animate the vertical line above the scroll indicator
+        const scrollLine = scrollIndicator.querySelector('div');
+        if (scrollLine) {
+          gsap.fromTo(scrollLine,
+            { scaleY: 0 },
+            { 
+              scaleY: 1, 
+              duration: 0.8,
+              ease: "power2.inOut",
+              delay: isMobile ? 1.4 : 2.2
+            }
+          );
+        }
+        
+        // Animate the CTA buttons
+        const ctaButtons = container.querySelector('.cta-buttons');
+        if (ctaButtons) {
+          gsap.fromTo(ctaButtons,
+            { opacity: 0, y: 20 },
+            { 
+              opacity: 1, 
+              y: 0, 
+              duration: 0.8,
+              ease: "power2.out",
+              delay: isMobile ? 1.0 : 1.8
+            }
+          );
         }
       }
+      }
     });
-    
-  }, [isLoading, loaderComplete]);
+  }, [isLoading, loaderComplete, bgY]);
+
+  // Scroll down function for the explore button
+  const scrollToNextSection = () => {
+    if (typeof document !== 'undefined') {
+      const nextSection = document.querySelector('#about-section');
+      if (nextSection) {
+        nextSection.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  };
 
   return (
     <motion.section 
@@ -334,8 +403,65 @@ export default function Hero() {
         </div>
       </div>
       
-      {/* Galle Fort Lighthouse - adjusted for mobile */}
-      <div className="absolute -bottom-4 md:-bottom-10 right-0 w-32 sm:w-40 md:w-72 lg:w-96 h-[250px] sm:h-[350px] md:h-[600px] lg:h-[800px] lighthouse-element opacity-0 z-[2] perspective-[1000px] transform-gpu">
+      {/* Mobile Only Food Icons - These will only appear on mobile devices */}
+      <div className="absolute top-36 left-[35%] w-9 sm:hidden food-icon-7 opacity-0 z-[2]">
+        <div className="relative w-full aspect-square">
+          <Image 
+            src="/images/icons/food-icon-2.png" 
+            alt="Indian Food" 
+            fill
+            className="object-contain object-center"
+            style={{ 
+              filter: "drop-shadow(0 3px 5px rgba(0,0,0,0.15))"
+            }}
+          />
+        </div>
+      </div>
+      
+      <div className="absolute bottom-48 right-[30%] w-10 sm:hidden food-icon-8 opacity-0 z-[2]">
+        <div className="relative w-full aspect-square">
+          <Image 
+            src="/images/icons/food-icon-8.png" 
+            alt="Indian Food" 
+            fill
+            className="object-contain object-center"
+            style={{ 
+              filter: "drop-shadow(0 3px 5px rgba(0,0,0,0.15))"
+            }}
+          />
+        </div>
+      </div>
+      
+      <div className="absolute top-48 right-[45%] w-8 sm:hidden food-icon-9 opacity-0 z-[2]">
+        <div className="relative w-full aspect-square">
+          <Image 
+            src="/images/icons/food-icon-4.png" 
+            alt="Indian Food" 
+            fill
+            className="object-contain object-center"
+            style={{ 
+              filter: "drop-shadow(0 3px 5px rgba(0,0,0,0.15))"
+            }}
+          />
+        </div>
+      </div>
+      
+      <div className="absolute bottom-32 left-[45%] w-9 sm:hidden food-icon-10 opacity-0 z-[2]">
+        <div className="relative w-full aspect-square">
+          <Image 
+            src="/images/icons/food-icon-6.png" 
+            alt="Indian Food" 
+            fill
+            className="object-contain object-center"
+            style={{ 
+              filter: "drop-shadow(0 3px 5px rgba(0,0,0,0.15))"
+            }}
+          />
+        </div>
+      </div>
+      
+      {/* Galle Fort Lighthouse - extremely large on mobile and positioned more to the right */}
+      <div className="absolute -bottom-4 md:-bottom-10 -right-12 sm:right-0 w-64 sm:w-72 md:w-80 lg:w-96 h-[450px] sm:h-[500px] md:h-[600px] lg:h-[800px] lighthouse-element opacity-0 z-[2] perspective-[1000px] transform-gpu">
         <div className="relative w-full h-full drop-shadow-2xl">
           <Image 
             src="/images/gallery/lighthouse.png" 
@@ -350,8 +476,8 @@ export default function Hero() {
         </div>
       </div>
       
-      {/* German Castle - adjusted for mobile */}
-      <div className="absolute -bottom-4 md:-bottom-10 left-0 w-32 sm:w-40 md:w-72 lg:w-96 h-[250px] sm:h-[350px] md:h-[600px] lg:h-[800px] castle-element opacity-0 z-[2] perspective-[1000px] transform-gpu">
+      {/* German Castle - moderately bigger on mobile */}
+      <div className="absolute -bottom-4 md:-bottom-10 left-0 w-40 sm:w-48 md:w-72 lg:w-96 h-[300px] sm:h-[400px] md:h-[600px] lg:h-[800px] castle-element opacity-0 z-[2] perspective-[1000px] transform-gpu">
         <div className="relative w-full h-full drop-shadow-2xl">
           <Image 
             src="/images/backgrounds/germany-drawn-seamless-pattern 1 (1).png" 
@@ -366,44 +492,6 @@ export default function Hero() {
         </div>
       </div>
       
-      {/* Curved arrow pointing to lighthouse with elegant text - hidden on smaller screens */}
-      <div className="absolute bottom-[18%] right-[18%] md:right-[22%] lg:right-[18%] z-[3] hidden md:block lighthouse-label opacity-0">
-        <div className="relative">
-          {/* Curved arrow SVG */}
-          <svg 
-            width="60" 
-            height="35" 
-            viewBox="0 0 60 35" 
-            fill="none" 
-            xmlns="http://www.w3.org/2000/svg"
-            className="absolute -right-2 top-1/2 transform -translate-y-1/2"
-          >
-            <path 
-              d="M0,15 C15,10 30,12 60,22" 
-              stroke="var(--heritage)" 
-              strokeWidth="1.5" 
-              strokeDasharray="3 2" 
-              fill="none" 
-              opacity="0.7"
-            />
-            <path 
-              d="M55,17 L60,22 L53,25" 
-              stroke="var(--heritage)" 
-              strokeWidth="1.5" 
-              fill="none" 
-              opacity="0.7"
-            />
-          </svg>
-          
-          {/* Elegant text */}
-          <div className="text-right pr-16 transform rotate-[-5deg]">
-            <p className="font-playfair italic text-xs text-heritage drop-shadow-sm" style={{ textShadow: "0 1px 2px rgba(255,255,255,0.8)" }}>
-              Overlooking the Galle Light
-            </p>
-          </div>
-        </div>
-      </div>
-      
       {/* Sri Lankan coastline silhouette */}
       <div className="absolute bottom-0 left-0 right-0 h-10 md:h-16 overflow-hidden z-[1] opacity-10">
         <svg viewBox="0 0 1200 100" className="w-full h-full">
@@ -415,95 +503,94 @@ export default function Hero() {
         </svg>
       </div>
       
-      {/* Main content */}
-      <motion.div 
-        className="flex flex-col md:flex-row items-center justify-between w-full h-full flex-1 gap-6 md:gap-8 z-10 mt-8 md:mt-24 lg:mt-28"
-        style={{ opacity: textOpacity, y: textY }}
-      >
-        {/* Left column - hidden on mobile */}
-        <div className="hidden md:block w-full md:w-1/3 text-roast text-base md:text-lg font-light relative text-column-left opacity-0">
-          <div className="relative pl-4 md:pl-6">
-            <div className="absolute left-0 top-0 h-full w-0.5 bg-heritage/10"></div>
-            <p className="leading-relaxed">
-              Nestled in the heart of Galle Fort, Indian Hut honors centuries of spice, culture, and conversation.
-            </p>
-            
-            {/* Modern accent element */}
-            <div className="mt-4 md:mt-6 opacity-0 h-0.5 w-12 bg-gold/40"></div>
-          </div>
-        </div>
-
-        {/* Center column */}
-        <div className="w-full md:w-1/3 text-center flex flex-col items-center justify-center gap-2 md:gap-3 relative text-column-center opacity-0">
-          <div className="text-gold">
-            <svg 
-              xmlns="http://www.w3.org/2000/svg" 
-              viewBox="0 0 24 24" 
-              fill="currentColor" 
-              className="w-5 h-5 md:w-6 md:h-6"
-            >
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-            </svg>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-playfair text-charcoal tracking-wider heritage-spacing relative">
+      {/* Main content - New design with centered layout */}
+      <div className="relative z-10 flex flex-col items-center justify-center max-w-6xl mx-auto text-center">
+        {/* Main title with elegant style */}
+        <div className="title-element opacity-0">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-playfair text-charcoal tracking-wider mb-4 md:mb-6">
             <span className="relative inline-block">
               INDIAN HUT
-              <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gold/30 origin-left scale-x-0"></span>
+              <span className="accent-line absolute -bottom-2 left-0 right-0 h-0.5 bg-gold/60 origin-left scale-x-0"></span>
             </span>
           </h1>
-          <div className="flex flex-col items-center">
-            <span className="text-sm sm:text-base md:text-lg text-charcoal tracking-widest font-medium">
-              HERITAGE
-            </span>
-            <span className="text-xs md:text-sm text-charcoal tracking-wider mt-0.5 md:mt-1">
-              SINCE 1986
-            </span>
-          </div>
-          
-          {/* Modern decorative element */}
-          <div className="mt-2 md:mt-3 opacity-0 flex gap-1">
-            <div className="h-0.5 w-2 bg-gold/40"></div>
-            <div className="h-0.5 w-6 bg-gold/40"></div>
-            <div className="h-0.5 w-2 bg-gold/40"></div>
-          </div>
-          
-          {/* Hamsa Hand (Palm) - Indian decorative element */}
-          <div className="mt-3 md:mt-4 w-10 sm:w-12 md:w-14 lg:w-16 hamsa-element opacity-0 z-[3]">
-            <div className="relative w-full aspect-square">
-              <Image 
-                src="/images/decorative/decorative-element-2.png" 
-                alt="Hamsa Hand" 
-                fill
-                className="object-contain object-center"
-                style={{ 
-                  filter: "drop-shadow(0 3px 6px rgba(0,0,0,0.15))"
-                }}
-              />
-            </div>
+        </div>
+        
+        {/* Subtitle with heritage emphasis */}
+        <div className="subtitle-element opacity-0 mb-3 md:mb-5">
+          <div className="flex items-center justify-center gap-3 md:gap-5">
+            <div className="h-px w-8 md:w-12 bg-gold/40"></div>
+            <h2 className="text-base sm:text-lg md:text-xl text-charcoal tracking-widest font-medium">
+              HERITAGE SINCE 1986
+            </h2>
+            <div className="h-px w-8 md:w-12 bg-gold/40"></div>
           </div>
         </div>
-
-        {/* Right column - hidden on mobile */}
-        <div className="hidden md:block w-full md:w-1/3 text-charcoal text-base md:text-lg font-light text-right relative text-column-right opacity-0">
-          <div className="relative pr-4 md:pr-6">
-            <div className="absolute right-0 top-0 h-full w-0.5 bg-heritage/10"></div>
-            <p className="leading-relaxed">
-              Blending the charm of a colonial café with timeless Indian hospitality since 1986.
-            </p>
-            
-            {/* Modern accent element */}
-            <div className="mt-4 md:mt-6 opacity-0 flex justify-end">
-              <div className="h-0.5 w-12 bg-gold/40"></div>
-            </div>
+        
+        {/* Tagline with elegant description */}
+        <div className="tagline-element opacity-0 max-w-xl mx-auto mb-8 md:mb-12">
+          <p className="text-sm md:text-base lg:text-lg text-roast leading-relaxed">
+            A culinary journey through authentic Indian flavors, nestled in the heart of Galle Fort. 
+            Blending traditional recipes with modern elegance.
+          </p>
+          </div>
+          
+        {/* Hamsa Hand (Palm) - Indian decorative element */}
+        <div className="w-12 sm:w-14 md:w-16 lg:w-20 hamsa-element opacity-0 z-[3] mb-8 md:mb-12">
+          <div className="relative w-full aspect-square">
+            <Image 
+              src="/images/decorative/decorative-element-2.png" 
+              alt="Hamsa Hand" 
+              fill
+              className="object-contain object-center"
+              style={{ 
+                filter: "drop-shadow(0 3px 6px rgba(0,0,0,0.15))"
+              }}
+            />
           </div>
         </div>
-      </motion.div>
+        
+                {/* Call to action buttons */}
+        <div
+          className="flex flex-col sm:flex-row gap-4 sm:gap-6 opacity-0 cta-buttons"
+        >
+          <motion.button 
+            className="bg-heritage text-white py-3 px-6 sm:px-8 rounded-lg text-sm md:text-base tracking-wider flex items-center justify-center gap-2 hover:bg-heritage/90 transition-colors"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            DISCOVER OUR MENU
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M5 12H19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M12 5L19 12L12 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </motion.button>
+          
+          <motion.button 
+            className="bg-transparent border-2 border-heritage text-heritage py-3 px-6 sm:px-8 rounded-lg text-sm md:text-base tracking-wider flex items-center justify-center gap-2 hover:bg-heritage/10 transition-colors"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            MAKE RESERVATION
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M8 2V5" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+              <path d="M16 2V5" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+              <path d="M3 9H21" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+              <path d="M19 4H5C3.89543 4 3 4.89543 3 6V19C3 20.1046 3.89543 21 5 21H19C20.1046 21 21 20.1046 21 19V6C21 4.89543 20.1046 4 19 4Z" stroke="currentColor" strokeWidth="2"/>
+              <path d="M12 14H16" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+              <path d="M8 14H8.01" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+              <path d="M12 17H16" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+              <path d="M8 17H8.01" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+            </svg>
+          </motion.button>
+        </div>
+      </div>
 
       {/* Scroll down arrow with better centering */}
-      <div className="flex justify-center mt-10 md:mt-24 z-10 scroll-indicator opacity-0">
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex justify-center z-10 scroll-indicator opacity-0">
         <button
           className="text-charcoal hover-heritage transition-soft focus:outline-none relative flex flex-col items-center"
           aria-label="Scroll down"
+          onClick={scrollToNextSection}
         >
           <div className="absolute -top-6 md:-top-10 left-1/2 transform -translate-x-1/2 w-px h-4 md:h-6 bg-gold/30 origin-bottom scale-y-0"></div>
           <span className="text-xs tracking-widest text-charcoal/50 mb-2 font-light">EXPLORE</span>

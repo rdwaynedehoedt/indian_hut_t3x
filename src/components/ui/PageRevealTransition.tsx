@@ -49,40 +49,14 @@ export default function PageRevealTransition({ children }: { children: React.Rea
             animate={{ opacity: 1 }}
             exit={{ opacity: 0, transition: { duration: 0.7, ease: "easeInOut" } }}
           >
-            {/* Decorative element */}
-            <motion.div
-              className="absolute z-30 w-16 md:w-20"
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ 
-                opacity: [0, 1, 1, 0.8],
-                scale: [0.8, 1, 1, 1.1],
-                y: [0, 0, 0, -80],
-                transition: { 
-                  duration: 3,
-                  times: [0, 0.2, 0.65, 1],
-                  ease: "easeInOut" 
-                }
-              }}
-            >
-              <div className="relative w-full aspect-square">
-                <Image 
-                  src="/images/decorative/decorative-element-2.png" 
-                  alt="Indian Hut" 
-                  fill
-                  className="object-contain"
-                  style={{ filter: "brightness(0.95) drop-shadow(0 0 8px rgba(255,150,50,0.3))" }}
-                />
-              </div>
-            </motion.div>
-            
-            {/* Text appears with decorative element */}
-            <div className="relative z-20 text-center mt-24">
+            {/* Text appears centered */}
+            <div className="relative z-20 text-center">
               <motion.div
                 className="text-sand font-playfair text-4xl md:text-5xl mb-2"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ 
                   opacity: [0, 1, 1, 0.9],
-                  y: [20, 0, 0, -80],
+                  y: [20, 0, 0, -50],
                   transition: { 
                     duration: 3,
                     times: [0, 0.2, 0.65, 1],
@@ -97,7 +71,7 @@ export default function PageRevealTransition({ children }: { children: React.Rea
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ 
                   opacity: [0, 1, 1, 0.9],
-                  y: [20, 0, 0, -80],
+                  y: [20, 0, 0, -50],
                   transition: { 
                     duration: 3,
                     delay: 0.05,

@@ -4,6 +4,7 @@ import { Playfair_Display } from "next/font/google";
 import Header from "../components/layout/Header";
 import Footer from "../components/layout/Footer";
 import PageRevealTransition from "../components/ui/PageRevealTransition";
+import ScrollToTop from "../components/ui/ScrollToTop";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -41,6 +42,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="scroll-smooth">
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, user-scalable=yes" />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable} antialiased bg-sand text-charcoal min-h-screen flex flex-col`}
       >
@@ -51,6 +55,7 @@ export default function RootLayout({
           </div>
         </PageRevealTransition>
         <Footer />
+        <ScrollToTop />
       </body>
     </html>
   );

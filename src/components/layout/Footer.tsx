@@ -48,26 +48,32 @@ export default function Footer() {
             &copy; {currentYear} Indian Hut. All rights reserved.
           </p>
           <div className="flex space-x-4 mt-4 md:mt-0">
-            <motion.a 
-              href="https://instagram.com" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="text-roast hover-heritage text-xs md:text-sm"
+            <motion.div
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
             >
-              Instagram
-            </motion.a>
-            <motion.a 
-              href="https://facebook.com" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="text-roast hover-heritage text-xs md:text-sm"
+              <a 
+                href="https://instagram.com" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-roast hover-heritage text-xs md:text-sm"
+              >
+                Instagram
+              </a>
+            </motion.div>
+            <motion.div
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
             >
-              Facebook
-            </motion.a>
+              <a 
+                href="https://facebook.com" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-roast hover-heritage text-xs md:text-sm"
+              >
+                Facebook
+              </a>
+            </motion.div>
           </div>
         </div>
       </div>
