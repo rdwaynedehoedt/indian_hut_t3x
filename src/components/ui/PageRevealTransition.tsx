@@ -1,8 +1,7 @@
 'use client';
 
-import { useEffect, useState, useRef, createContext, useContext } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import Image from 'next/image';
+import { createContext, useContext, useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 // Create a context to share the loader state with other components
 export const LoaderContext = createContext({

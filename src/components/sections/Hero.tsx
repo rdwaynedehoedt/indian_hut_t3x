@@ -11,8 +11,8 @@ export default function Hero() {
   const { isLoading, loaderComplete } = useLoader();
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollY } = useScroll();
-  const textOpacity = useTransform(scrollY, [0, 300], [1, 0]);
-  const textY = useTransform(scrollY, [0, 300], [0, -50]);
+  const _textOpacity = useTransform(scrollY, [0, 300], [1, 0]);
+  const _textY = useTransform(scrollY, [0, 300], [0, -50]);
   const bgY = useTransform(scrollY, [0, 300], [0, 100]);
   const hasAnimated = useRef(false);
 
@@ -205,7 +205,7 @@ export default function Hero() {
           gsap.fromTo(icon,
             { opacity: 0, scale: 0.7, rotation },
             { 
-              opacity: 0.85, 
+              opacity: isMobile ? 0.45 : 0.85, // Much more transparent on mobile
               scale: 1, 
               rotation: 0, 
               duration: 1.5,
@@ -218,9 +218,9 @@ export default function Hero() {
           gsap.to(icon, {
             y: `-${isMobile ? (3 + Math.floor(Math.random() * 3)) : (5 + Math.floor(Math.random() * 5))}px`,
             duration: isMobile ? 2.0 + (Math.random() * 1.0) : 2.5 + (Math.random() * 1.5),
-            repeat: -1,
-            yoyo: true,
-            ease: "sine.inOut",
+      repeat: -1,
+      yoyo: true,
+      ease: "sine.inOut",
             delay: isMobile ? 1.5 + (index * 0.2) : 3.0 + (index * 0.3)
           });
         });
@@ -583,7 +583,7 @@ export default function Hero() {
             </svg>
           </motion.button>
         </div>
-      </div>
+          </div>
 
       {/* Scroll down arrow with better centering */}
       <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex justify-center z-10 scroll-indicator opacity-0">

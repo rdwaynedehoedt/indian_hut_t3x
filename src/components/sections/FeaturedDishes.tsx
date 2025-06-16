@@ -7,6 +7,7 @@ import SectionTitle from "../ui/SectionTitle";
 import Link from "next/link";
 import Tilt from 'react-parallax-tilt';
 import ParallaxSpices from "../ui/ParallaxSpices";
+import FoodStickersEffect from "../ui/FoodStickersEffect";
 
 type Dish = {
   id: number;
@@ -24,7 +25,7 @@ const featuredDishes: Dish[] = [
     id: 1,
     name: "Butter Chicken",
     description: "Tender chicken in a rich, creamy tomato sauce with aromatic spices and fresh cream.",
-    image: "/images/menu/retro-food-stickers 1.PNG",
+    image: "/images/menu/Butter Chicken styled plate overhead.jpg",
     price: "₹450",
     spiceLevel: 2,
     category: "non-vegetarian",
@@ -34,7 +35,7 @@ const featuredDishes: Dish[] = [
     id: 2,
     name: "Palak Paneer",
     description: "Fresh cottage cheese cubes in a smooth, spiced spinach gravy finished with cream.",
-    image: "/images/menu/retro-food-stickers 2.PNG",
+    image: "/images/menu/Palak Paneer.jpg",
     price: "₹350",
     spiceLevel: 1,
     category: "vegetarian",
@@ -44,7 +45,7 @@ const featuredDishes: Dish[] = [
     id: 3,
     name: "Prawn Curry",
     description: "Succulent prawns simmered in a coconut-based curry with traditional coastal spices.",
-    image: "/images/menu/retro-food-stickers 5.PNG",
+    image: "/images/menu/Prawn Curry.jpg",
     price: "₹550",
     spiceLevel: 3,
     category: "seafood",
@@ -54,7 +55,7 @@ const featuredDishes: Dish[] = [
     id: 4,
     name: "Gulab Jamun",
     description: "Soft milk solids dumplings, deep-fried and soaked in rose-scented sugar syrup.",
-    image: "/images/menu/retro-food-stickers 8.PNG",
+    image: "/images/menu/Gulab Jamun.jpeg",
     price: "₹250",
     spiceLevel: 1,
     category: "dessert",
@@ -74,6 +75,9 @@ export default function FeaturedDishes() {
         
         {/* Parallax floating spices */}
         <ParallaxSpices />
+        
+        {/* 3D floating food stickers */}
+        <FoodStickersEffect />
         
         {/* Decorative spice illustration */}
         <div className="absolute bottom-10 left-10 w-32 h-32 opacity-[0.07]">

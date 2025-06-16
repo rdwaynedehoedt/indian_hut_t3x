@@ -8,37 +8,58 @@ import SectionTitle from "../ui/SectionTitle";
 type Testimonial = {
   id: number;
   name: string;
-  role: string;
+  country: string;
+  countryFlag: string;
   quote: string;
-  avatar: string;
   rating: number;
 };
 
+// Updated testimonials with country flags
 const testimonials: Testimonial[] = [
   {
     id: 1,
     name: "Priya Sharma",
-    role: "Food Critic",
+    country: "India",
+    countryFlag: "🇮🇳",
     quote: "Indian Hut captures the essence of traditional Indian cuisine while adding their own unique twist. The butter chicken is simply divine!",
-    avatar: "/images/decorative/decorative-element-2.png",
     rating: 5
   },
   {
     id: 2,
     name: "James Wilson",
-    role: "Travel Blogger",
+    country: "UK",
+    countryFlag: "🇬🇧",
     quote: "During my stay in Galle Fort, Indian Hut became my daily ritual. The ambiance and flavors transport you to another world.",
-    avatar: "/images/decorative/decorative-element-5.png",
     rating: 5
   },
   {
     id: 3,
     name: "Anushka Patel",
-    role: "Local Resident",
+    country: "Sri Lanka",
+    countryFlag: "🇱🇰",
     quote: "As someone who grew up with authentic Indian cooking, I can say Indian Hut truly honors the traditions while creating something special.",
-    avatar: "/images/decorative/decorative-element-6.png",
     rating: 4
   }
+];
+
+// Food icons for decorative elements
+const foodIcons = [
+  "/images/decorative/decorative-element-1.png",
+  "/images/decorative/decorative-element-2.png",
+  "/images/decorative/decorative-element-3.png",
+  "/images/decorative/decorative-element-4.png",
+  "/images/decorative/decorative-element-5.png",
+  "/images/decorative/decorative-element-6.png"
+];
+
+// Predefined positions for food icons to avoid hydration errors
+const iconPositions = [
+  { top: "15%", left: "12%", rotate: "45deg", scale: 0.5 },
+  { top: "25%", left: "80%", rotate: "120deg", scale: 0.7 },
+  { top: "65%", left: "25%", rotate: "190deg", scale: 0.6 },
+  { top: "85%", left: "75%", rotate: "270deg", scale: 0.4 },
+  { top: "45%", left: "65%", rotate: "330deg", scale: 0.8 },
+  { top: "10%", left: "45%", rotate: "10deg", scale: 0.6 }
 ];
 
 export default function Testimonials() {
@@ -62,14 +83,37 @@ export default function Testimonials() {
   
   return (
     <section className="py-20 md:py-32 px-4 sm:px-6 md:px-12 lg:px-24 bg-sand-light relative overflow-hidden">
-      {/* Decorative background elements */}
+      {/* Decorative background elements - Food icons */}
       <div className="absolute inset-0 pointer-events-none">
         {/* Subtle pattern */}
         <div className="absolute inset-0 bg-grid-pattern opacity-[0.03]" />
         
         {/* Quote marks */}
-        <div className="absolute top-20 left-1/4 text-[120px] font-playfair text-gold/10">"</div>
-        <div className="absolute bottom-20 right-1/4 text-[120px] font-playfair text-gold/10">"</div>
+        <div className="absolute top-20 left-1/4 text-[120px] font-playfair text-gold/10">&ldquo;</div>
+        <div className="absolute bottom-20 right-1/4 text-[120px] font-playfair text-gold/10">&rdquo;</div>
+        
+        {/* Food icons with predefined positions to avoid hydration errors */}
+        {foodIcons.map((icon, index) => (
+          <div 
+            key={index}
+            className="absolute opacity-10"
+            style={{
+              top: iconPositions[index].top,
+              left: iconPositions[index].left,
+              transform: `rotate(${iconPositions[index].rotate}) scale(${iconPositions[index].scale})`,
+              width: '60px',
+              height: '60px'
+            }}
+          >
+            <Image
+              src={icon}
+              alt="Food icon"
+              width={60}
+              height={60}
+              className="object-contain"
+            />
+          </div>
+        ))}
       </div>
       
       <div className="max-w-5xl mx-auto">
@@ -96,19 +140,16 @@ export default function Testimonials() {
                     exit={{ opacity: 0, y: -20 }}
                     transition={{ duration: 0.5 }}
                   >
-                    {/* Avatar */}
+                    {/* Profile circle with country flag */}
                     <motion.div 
-                      className="relative w-20 h-20 rounded-full overflow-hidden mb-6 border-2 border-gold/20"
+                      className="relative w-20 h-20 rounded-full overflow-hidden mb-6 bg-sand flex items-center justify-center shadow-md border-2 border-gold/20"
                       initial={{ scale: 0.8 }}
                       animate={{ scale: 1 }}
                       transition={{ duration: 0.5, delay: 0.2 }}
                     >
-                      <Image
-                        src={testimonial.avatar}
-                        alt={testimonial.name}
-                        fill
-                        className="object-cover"
-                      />
+                      <span className="text-4xl" aria-label={`Flag of ${testimonial.country}`}>
+                        {testimonial.countryFlag}
+                      </span>
                     </motion.div>
                     
                     {/* Rating stars */}
@@ -142,7 +183,7 @@ export default function Testimonials() {
                       animate={{ opacity: 1 }}
                       transition={{ duration: 0.5, delay: 0.4 }}
                     >
-                      "{testimonial.quote}"
+                      &ldquo;{testimonial.quote}&rdquo;
                     </motion.blockquote>
                     
                     {/* Author */}
@@ -152,7 +193,7 @@ export default function Testimonials() {
                       transition={{ duration: 0.5, delay: 0.5 }}
                     >
                       <h4 className="font-playfair text-lg text-charcoal">{testimonial.name}</h4>
-                      <p className="text-sm text-roast">{testimonial.role}</p>
+                      <p className="text-sm text-roast">From {testimonial.country}</p>
                     </motion.div>
                   </motion.div>
                 )

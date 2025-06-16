@@ -1,14 +1,11 @@
 "use client";
 
-import { useState } from "react";
-import Image from "next/image";
 import { motion } from "framer-motion";
 import SectionTitle from "../ui/SectionTitle";
 import LighthouseFogEffect from "../ui/LighthouseFogEffect";
 import Link from "next/link";
 
 export default function VisitSection() {
-  const [mapHovered, setMapHovered] = useState(false);
   const googleMapsUrl = "https://maps.app.goo.gl/sY1kJ4P3Nx3uHFy2A";
   
   return (

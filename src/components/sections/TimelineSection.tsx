@@ -121,7 +121,7 @@ export default function TimelineSection() {
               className="text-center"
             >
               <h3 className="font-handwritten text-white text-xl md:text-3xl mb-4 leading-relaxed">
-                "We don't follow trends. We follow our grandmother's hands."
+                &ldquo;We don&apos;t follow trends. We follow our grandmother&apos;s hands.&rdquo;
               </h3>
               <div className="h-px w-20 bg-gold/70 mx-auto mb-4"></div>
               <p className="text-white/90 italic text-sm md:text-base">
