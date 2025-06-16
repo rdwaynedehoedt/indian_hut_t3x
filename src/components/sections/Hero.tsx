@@ -5,17 +5,26 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import Image from "next/image";
 import { gsap } from "gsap";
+import { useLoader } from "../ui/PageRevealTransition";
 
 export default function Hero() {
+  const { isLoading, loaderComplete } = useLoader();
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollY } = useScroll();
   const textOpacity = useTransform(scrollY, [0, 300], [1, 0]);
   const textY = useTransform(scrollY, [0, 300], [0, -50]);
   const bgY = useTransform(scrollY, [0, 300], [0, 100]);
+  const hasAnimated = useRef(false);
 
   // GSAP animations
   useEffect(() => {
-    if (!containerRef.current) return;
+    if (!containerRef.current || isLoading) return;
+    
+    // Only start animations when loader is complete and we haven't animated yet
+    if (!loaderComplete || hasAnimated.current) return;
+    
+    // Mark that we've started the animations
+    hasAnimated.current = true;
     
     const lighthouseElement = containerRef.current.querySelector('.lighthouse-element');
     const lighthouseLabel = containerRef.current.querySelector('.lighthouse-label');
@@ -28,235 +37,187 @@ export default function Hero() {
     const foodIcon5 = containerRef.current.querySelector('.food-icon-5');
     const foodIcon6 = containerRef.current.querySelector('.food-icon-6');
     
-    // Enhanced lighthouse animation - rising from bottom with 3D effect
-    gsap.fromTo(lighthouseElement, 
-      { 
-        opacity: 0, 
-        y: 200, 
-        scale: 0.85,
-        rotationY: -10,
-        transformOrigin: "bottom center"
-      },
-      { 
-        opacity: 1, 
-        y: 0, 
-        scale: 1,
-        rotationY: 0,
-        duration: 2.5,
-        ease: "power3.out",
-        delay: 1.2
+    // Reveal the hero section first
+    gsap.to(containerRef.current, {
+      opacity: 1,
+      duration: 0.8,
+      ease: "power2.out",
+      onComplete: () => {
+        // Start all other animations after hero section is visible
+        
+        // Enhanced lighthouse animation - rising from bottom with 3D effect
+        gsap.fromTo(lighthouseElement, 
+          { 
+            opacity: 0, 
+            y: 200, 
+            scale: 0.85,
+            rotationY: -10,
+            transformOrigin: "bottom center"
+          },
+          { 
+            opacity: 1, 
+            y: 0, 
+            scale: 1,
+            rotationY: 0,
+            duration: 2.5,
+            ease: "power3.out",
+            delay: 0.4
+          }
+        );
+        
+        // Castle animation - rising from bottom with 3D effect
+        gsap.fromTo(castleElement, 
+          { 
+            opacity: 0, 
+            y: 200, 
+            scale: 0.85,
+            rotationY: 10,
+            transformOrigin: "bottom center"
+          },
+          { 
+            opacity: 1, 
+            y: 0, 
+            scale: 1,
+            rotationY: 0,
+            duration: 2.5,
+            ease: "power3.out",
+            delay: 0.2
+          }
+        );
+        
+        // Lighthouse label animation
+        gsap.fromTo(lighthouseLabel,
+          { opacity: 0, x: -20 },
+          { 
+            opacity: 1, 
+            x: 0, 
+            duration: 1.5,
+            ease: "power2.out",
+            delay: 2.0
+          }
+        );
+        
+        // Continuous subtle floating animation for lighthouse
+        gsap.to(lighthouseElement, {
+          y: "-15px",
+          rotationY: 3,
+          duration: 4,
+          repeat: -1,
+          yoyo: true,
+          ease: "sine.inOut",
+          delay: 2.9
+        });
+        
+        // Continuous subtle floating animation for castle
+        gsap.to(castleElement, {
+          y: "-12px",
+          rotationY: -3,
+          duration: 3.5,
+          repeat: -1,
+          yoyo: true,
+          ease: "sine.inOut",
+          delay: 2.7
+        });
+        
+        // Hamsa hand animation
+        gsap.fromTo(hamsaElement, 
+          { 
+            opacity: 0, 
+            scale: 0.7,
+            y: 10
+          },
+          { 
+            opacity: 0.9, 
+            scale: 1,
+            y: 0,
+            duration: 1.5,
+            ease: "power2.out",
+            delay: 1.0
+          }
+        );
+        
+        // Food icons animations - staggered for visual interest
+        const foodIcons = [foodIcon1, foodIcon2, foodIcon3, foodIcon4, foodIcon5, foodIcon6];
+        
+        foodIcons.forEach((icon, index) => {
+          if (!icon) return;
+          
+          // Random rotation for more natural appearance
+          const rotation = Math.random() > 0.5 ? 
+            -Math.floor(Math.random() * 10 + 5) : 
+            Math.floor(Math.random() * 10 + 5);
+            
+          gsap.fromTo(icon,
+            { opacity: 0, scale: 0.7, rotation },
+            { 
+              opacity: 0.85, 
+              scale: 1, 
+              rotation: 0, 
+              duration: 1.5,
+              ease: "back.out(1.2)",
+              delay: 1.2 + (index * 0.2) // Staggered delay
+            }
+          );
+          
+          // Subtle floating animation with random parameters
+          gsap.to(icon, {
+            y: `-${5 + Math.floor(Math.random() * 5)}px`,
+            duration: 2.5 + (Math.random() * 1.5),
+            repeat: -1,
+            yoyo: true,
+            ease: "sine.inOut",
+            delay: 3.0 + (index * 0.3)
+          });
+        });
+        
+        // Animate in the text columns
+        if (containerRef.current) {
+          const textColumns = [
+            containerRef.current.querySelector('.text-column-left'),
+            containerRef.current.querySelector('.text-column-center'),
+            containerRef.current.querySelector('.text-column-right')
+          ];
+          
+          textColumns.forEach((column, index) => {
+            if (!column) return;
+            
+            gsap.fromTo(column,
+              { opacity: 0, y: 20 },
+              { 
+                opacity: 1, 
+                y: 0, 
+                duration: 0.8,
+                ease: "power2.out",
+                delay: 0.3 + (index * 0.2)
+              }
+            );
+          });
+          
+          // Animate scroll indicator
+          const scrollIndicator = containerRef.current.querySelector('.scroll-indicator');
+          if (scrollIndicator) {
+            gsap.fromTo(scrollIndicator,
+              { opacity: 0 },
+              { 
+                opacity: 1, 
+                duration: 0.5,
+                ease: "power2.out",
+                delay: 2.2
+              }
+            );
+          }
+        }
       }
-    );
-    
-    // Castle animation - rising from bottom with 3D effect
-    gsap.fromTo(castleElement, 
-      { 
-        opacity: 0, 
-        y: 200, 
-        scale: 0.85,
-        rotationY: 10,
-        transformOrigin: "bottom center"
-      },
-      { 
-        opacity: 1, 
-        y: 0, 
-        scale: 1,
-        rotationY: 0,
-        duration: 2.5,
-        ease: "power3.out",
-        delay: 0.8
-      }
-    );
-    
-    // Lighthouse label animation
-    gsap.fromTo(lighthouseLabel,
-      { opacity: 0, x: -20 },
-      { 
-        opacity: 1, 
-        x: 0, 
-        duration: 1.5,
-        ease: "power2.out",
-        delay: 3
-      }
-    );
-    
-    // Continuous subtle floating animation for lighthouse
-    gsap.to(lighthouseElement, {
-      y: "-15px",
-      rotationY: 3,
-      duration: 4,
-      repeat: -1,
-      yoyo: true,
-      ease: "sine.inOut",
-      delay: 3.7
     });
     
-    // Continuous subtle floating animation for castle
-    gsap.to(castleElement, {
-      y: "-12px",
-      rotationY: -3,
-      duration: 3.5,
-      repeat: -1,
-      yoyo: true,
-      ease: "sine.inOut",
-      delay: 3.2
-    });
-    
-    // Hamsa hand animation
-    gsap.fromTo(hamsaElement, 
-      { 
-        opacity: 0, 
-        scale: 0.7,
-        y: 10
-      },
-      { 
-        opacity: 0.9, 
-        scale: 1,
-        y: 0,
-        duration: 1.5,
-        ease: "power2.out",
-        delay: 2.0
-      }
-    );
-    
-    // Food icons animations
-    gsap.fromTo(foodIcon1,
-      { opacity: 0, scale: 0.7, rotation: -10 },
-      { 
-        opacity: 0.85, 
-        scale: 1, 
-        rotation: 0, 
-        duration: 1.5,
-        ease: "back.out(1.2)",
-        delay: 2.2
-      }
-    );
-    
-    gsap.fromTo(foodIcon2,
-      { opacity: 0, scale: 0.7, rotation: 10 },
-      { 
-        opacity: 0.85, 
-        scale: 1, 
-        rotation: 0, 
-        duration: 1.5,
-        ease: "back.out(1.2)",
-        delay: 2.4
-      }
-    );
-    
-    gsap.fromTo(foodIcon3,
-      { opacity: 0, scale: 0.7, rotation: -5 },
-      { 
-        opacity: 0.85, 
-        scale: 1, 
-        rotation: 0, 
-        duration: 1.5,
-        ease: "back.out(1.2)",
-        delay: 2.6
-      }
-    );
-    
-    // Additional food icons animations
-    gsap.fromTo(foodIcon4,
-      { opacity: 0, scale: 0.7, rotation: 8 },
-      { 
-        opacity: 0.85, 
-        scale: 1, 
-        rotation: 0, 
-        duration: 1.5,
-        ease: "back.out(1.2)",
-        delay: 2.8
-      }
-    );
-    
-    gsap.fromTo(foodIcon5,
-      { opacity: 0, scale: 0.7, rotation: -8 },
-      { 
-        opacity: 0.85, 
-        scale: 1, 
-        rotation: 0, 
-        duration: 1.5,
-        ease: "back.out(1.2)",
-        delay: 3.0
-      }
-    );
-    
-    gsap.fromTo(foodIcon6,
-      { opacity: 0, scale: 0.7, rotation: 5 },
-      { 
-        opacity: 0.85, 
-        scale: 1, 
-        rotation: 0, 
-        duration: 1.5,
-        ease: "back.out(1.2)",
-        delay: 3.2
-      }
-    );
-    
-    // Subtle floating animation for food icons
-    gsap.to(foodIcon1, {
-      y: "-8px",
-      duration: 3,
-      repeat: -1,
-      yoyo: true,
-      ease: "sine.inOut",
-      delay: 3.8
-    });
-    
-    gsap.to(foodIcon2, {
-      y: "-6px",
-      duration: 2.5,
-      repeat: -1,
-      yoyo: true,
-      ease: "sine.inOut",
-      delay: 4
-    });
-    
-    gsap.to(foodIcon3, {
-      y: "-7px",
-      duration: 3.2,
-      repeat: -1,
-      yoyo: true,
-      ease: "sine.inOut",
-      delay: 3.5
-    });
-    
-    // Subtle floating animation for additional food icons
-    gsap.to(foodIcon4, {
-      y: "-5px",
-      duration: 2.8,
-      repeat: -1,
-      yoyo: true,
-      ease: "sine.inOut",
-      delay: 4.2
-    });
-    
-    gsap.to(foodIcon5, {
-      y: "-7px",
-      duration: 3.4,
-      repeat: -1,
-      yoyo: true,
-      ease: "sine.inOut",
-      delay: 4.4
-    });
-    
-    gsap.to(foodIcon6, {
-      y: "-6px",
-      duration: 3.0,
-      repeat: -1,
-      yoyo: true,
-      ease: "sine.inOut",
-      delay: 4.6
-    });
-  }, []);
+  }, [isLoading, loaderComplete]);
 
   return (
     <motion.section 
       ref={containerRef}
       className="min-h-screen flex flex-col justify-center px-6 md:px-12 lg:px-24 py-32 relative overflow-hidden"
       initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.8 }}
+      style={{ opacity: 0 }}
     >
       {/* Background texture */}
       <div className="absolute inset-0 z-0 overflow-hidden">
@@ -462,12 +423,7 @@ export default function Hero() {
         style={{ opacity: textOpacity, y: textY }}
       >
         {/* Left column */}
-        <motion.div 
-          className="w-full md:w-1/3 text-roast text-base md:text-lg font-light relative"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3, duration: 0.8 }}
-        >
+        <div className="w-full md:w-1/3 text-roast text-base md:text-lg font-light relative text-column-left opacity-0">
           <div className="relative pl-4 md:pl-6">
             <div className="absolute left-0 top-0 h-full w-0.5 bg-heritage/10"></div>
             <p className="leading-relaxed">
@@ -475,24 +431,12 @@ export default function Hero() {
             </p>
             
             {/* Modern accent element */}
-            <motion.div
-              className="mt-6 opacity-0"
-              initial={{ opacity: 0, scale: 0 }}
-              animate={{ opacity: 0.4, scale: 1 }}
-              transition={{ delay: 1.7, duration: 1 }}
-            >
-              <div className="h-0.5 w-12 bg-gold/40"></div>
-            </motion.div>
+            <div className="mt-6 opacity-0 h-0.5 w-12 bg-gold/40"></div>
           </div>
-        </motion.div>
+        </div>
 
         {/* Center column */}
-        <motion.div 
-          className="w-full md:w-1/3 text-center flex flex-col items-center justify-center gap-3 relative"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5, duration: 0.8 }}
-        >
+        <div className="w-full md:w-1/3 text-center flex flex-col items-center justify-center gap-3 relative text-column-center opacity-0">
           <div className="text-gold">
             <svg 
               xmlns="http://www.w3.org/2000/svg" 
@@ -506,12 +450,7 @@ export default function Hero() {
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-playfair text-charcoal tracking-wider heritage-spacing relative">
             <span className="relative inline-block">
               INDIAN HUT
-              <motion.span 
-                className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gold/30 origin-left"
-                initial={{ scaleX: 0 }}
-                animate={{ scaleX: 1 }}
-                transition={{ delay: 1.2, duration: 1.2, ease: "easeOut" }}
-              />
+              <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gold/30 origin-left scale-x-0"></span>
             </span>
           </h1>
           <div className="flex flex-col items-center">
@@ -524,16 +463,11 @@ export default function Hero() {
           </div>
           
           {/* Modern decorative element */}
-          <motion.div
-            className="mt-3 opacity-0 flex gap-1"
-            initial={{ opacity: 0, scale: 0 }}
-            animate={{ opacity: 0.4, scale: 1 }}
-            transition={{ delay: 1.5, duration: 1 }}
-          >
+          <div className="mt-3 opacity-0 flex gap-1">
             <div className="h-0.5 w-2 bg-gold/40"></div>
             <div className="h-0.5 w-6 bg-gold/40"></div>
             <div className="h-0.5 w-2 bg-gold/40"></div>
-          </motion.div>
+          </div>
           
           {/* Hamsa Hand (Palm) - Indian decorative element */}
           <div className="mt-4 w-12 md:w-14 lg:w-16 hamsa-element opacity-0 z-[3]">
@@ -549,15 +483,10 @@ export default function Hero() {
               />
             </div>
           </div>
-        </motion.div>
+        </div>
 
         {/* Right column */}
-        <motion.div 
-          className="w-full md:w-1/3 text-charcoal text-base md:text-lg font-light text-right relative"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.7, duration: 0.8 }}
-        >
+        <div className="w-full md:w-1/3 text-charcoal text-base md:text-lg font-light text-right relative text-column-right opacity-0">
           <div className="relative pr-4 md:pr-6">
             <div className="absolute right-0 top-0 h-full w-0.5 bg-heritage/10"></div>
             <p className="leading-relaxed">
@@ -565,46 +494,24 @@ export default function Hero() {
             </p>
             
             {/* Modern accent element */}
-            <motion.div
-              className="mt-6 opacity-0 flex justify-end"
-              initial={{ opacity: 0, scale: 0 }}
-              animate={{ opacity: 0.4, scale: 1 }}
-              transition={{ delay: 1.7, duration: 1 }}
-            >
+            <div className="mt-6 opacity-0 flex justify-end">
               <div className="h-0.5 w-12 bg-gold/40"></div>
-            </motion.div>
+            </div>
           </div>
-        </motion.div>
+        </div>
       </motion.div>
 
       {/* Scroll down arrow with better centering */}
-      <motion.div 
-        className="flex justify-center mt-24 z-10"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.2, duration: 0.5 }}
-      >
-        <motion.button
+      <div className="flex justify-center mt-24 z-10 scroll-indicator opacity-0">
+        <button
           className="text-charcoal hover-heritage transition-soft focus:outline-none relative flex flex-col items-center"
-          animate={{ y: [0, 8, 0] }}
-          transition={{ 
-            repeat: Infinity, 
-            repeatType: "loop", 
-            duration: 2.5,
-            ease: "easeInOut" 
-          }}
           aria-label="Scroll down"
         >
-          <motion.div
-            className="absolute -top-10 left-1/2 transform -translate-x-1/2 w-px h-6 bg-gold/30 origin-bottom"
-            initial={{ scaleY: 0 }}
-            animate={{ scaleY: 1 }}
-            transition={{ delay: 1.8, duration: 1 }}
-          />
+          <div className="absolute -top-10 left-1/2 transform -translate-x-1/2 w-px h-6 bg-gold/30 origin-bottom scale-y-0"></div>
           <span className="text-xs tracking-widest text-charcoal/50 mb-2 font-light">EXPLORE</span>
           <ChevronDown size={24} className="text-gold" />
-        </motion.button>
-      </motion.div>
+        </button>
+      </div>
     </motion.section>
   );
 } 

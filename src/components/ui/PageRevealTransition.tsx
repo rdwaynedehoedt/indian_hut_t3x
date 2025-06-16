@@ -1,13 +1,20 @@
 'use client';
 
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, createContext, useContext } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { usePathname, useSearchParams } from 'next/navigation';
+import Image from 'next/image';
+
+// Create a context to share the loader state with other components
+export const LoaderContext = createContext({
+  isLoading: true,
+  loaderComplete: false
+});
+
+export const useLoader = () => useContext(LoaderContext);
 
 export default function PageRevealTransition({ children }: { children: React.ReactNode }) {
   const [isFirstLoad, setIsFirstLoad] = useState(true);
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
+  const [loaderComplete, setLoaderComplete] = useState(false);
   const firstRender = useRef(true);
 
   // Handle initial page load
@@ -19,14 +26,19 @@ export default function PageRevealTransition({ children }: { children: React.Rea
       // Reset first load state after animation completes
       const timer = setTimeout(() => {
         setIsFirstLoad(false);
-      }, 2500);
+        
+        // Add a small delay before setting loaderComplete to true
+        setTimeout(() => {
+          setLoaderComplete(true);
+        }, 100);
+      }, 3000); // Extended to 3s for smoother transition
       
       return () => clearTimeout(timer);
     }
   }, []);
 
   return (
-    <>
+    <LoaderContext.Provider value={{ isLoading: isFirstLoad, loaderComplete }}>
       {/* Initial page load animation - only on first visit */}
       <AnimatePresence mode="wait">
         {isFirstLoad && (
@@ -35,19 +47,45 @@ export default function PageRevealTransition({ children }: { children: React.Rea
             className="fixed inset-0 z-[9999] pointer-events-none flex flex-col items-center justify-center"
             initial={{ opacity: 1 }}
             animate={{ opacity: 1 }}
-            exit={{ opacity: 0, transition: { duration: 0.5, ease: "easeInOut" } }}
+            exit={{ opacity: 0, transition: { duration: 0.7, ease: "easeInOut" } }}
           >
-            {/* Text appears first */}
-            <div className="relative z-20 text-center">
+            {/* Decorative element */}
+            <motion.div
+              className="absolute z-30 w-16 md:w-20"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ 
+                opacity: [0, 1, 1, 0.8],
+                scale: [0.8, 1, 1, 1.1],
+                y: [0, 0, 0, -80],
+                transition: { 
+                  duration: 3,
+                  times: [0, 0.2, 0.65, 1],
+                  ease: "easeInOut" 
+                }
+              }}
+            >
+              <div className="relative w-full aspect-square">
+                <Image 
+                  src="/images/decorative/decorative-element-2.png" 
+                  alt="Indian Hut" 
+                  fill
+                  className="object-contain"
+                  style={{ filter: "brightness(0.95) drop-shadow(0 0 8px rgba(255,150,50,0.3))" }}
+                />
+              </div>
+            </motion.div>
+            
+            {/* Text appears with decorative element */}
+            <div className="relative z-20 text-center mt-24">
               <motion.div
-                className="text-sand font-playfair text-4xl mb-2"
+                className="text-sand font-playfair text-4xl md:text-5xl mb-2"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ 
-                  opacity: [0, 1, 1, 0],
-                  y: [20, 0, 0, -20],
+                  opacity: [0, 1, 1, 0.9],
+                  y: [20, 0, 0, -80],
                   transition: { 
-                    duration: 2.0,
-                    times: [0, 0.15, 0.7, 0.9],
+                    duration: 3,
+                    times: [0, 0.2, 0.65, 1],
                     ease: "easeInOut" 
                   }
                 }}
@@ -55,20 +93,20 @@ export default function PageRevealTransition({ children }: { children: React.Rea
                 INDIAN HUT
               </motion.div>
               <motion.div
-                className="text-sand font-sans text-sm tracking-widest"
+                className="text-sand font-sans text-sm md:text-base tracking-widest"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ 
-                  opacity: [0, 1, 1, 0],
-                  y: [20, 0, 0, -20],
+                  opacity: [0, 1, 1, 0.9],
+                  y: [20, 0, 0, -80],
                   transition: { 
-                    duration: 2.0,
-                    delay: 0.1,
-                    times: [0, 0.15, 0.7, 0.9],
+                    duration: 3,
+                    delay: 0.05,
+                    times: [0, 0.2, 0.65, 1],
                     ease: "easeInOut" 
                   }
                 }}
               >
-                GALLE FORT
+                HERITAGE SINCE 1986
               </motion.div>
             </div>
 
@@ -81,21 +119,26 @@ export default function PageRevealTransition({ children }: { children: React.Rea
                 transition: { 
                   duration: 1.2,
                   ease: [0.25, 0.1, 0.25, 1],
-                  delay: 0.8
+                  delay: 1.8
                 } 
               }}
             />
+            
+            {/* Subtle pattern overlay */}
             <motion.div
-              className="absolute inset-0 bg-gold"
-              initial={{ y: 0 }}
-              animate={{ 
-                y: '-100%', 
-                transition: { 
-                  duration: 1.2,
-                  ease: [0.25, 0.1, 0.25, 1],
-                  delay: 0.4
-                } 
-              }}
+              className="absolute inset-0 opacity-5 mix-blend-soft-light pointer-events-none"
+              initial={{ opacity: 0.05 }}
+              animate={{ opacity: 0.05 }}
+            >
+              <div className="absolute inset-0 bg-grid-pattern"></div>
+            </motion.div>
+            
+            {/* Subtle radial gradient for depth */}
+            <motion.div
+              className="absolute inset-0 bg-gradient-radial from-transparent to-black/30 pointer-events-none"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1 }}
             />
           </motion.div>
         )}
@@ -105,6 +148,6 @@ export default function PageRevealTransition({ children }: { children: React.Rea
       <div className="w-full">
         {children}
       </div>
-    </>
+    </LoaderContext.Provider>
   );
 } 
