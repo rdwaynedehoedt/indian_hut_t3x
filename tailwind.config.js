@@ -21,6 +21,17 @@ module.exports = {
         sans: ["var(--font-geist-sans)"],
         mono: ["var(--font-geist-mono)"],
       },
+      backgroundImage: {
+        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+        'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+        'grid-pattern': `
+          linear-gradient(to right, rgba(186, 155, 103, 0.05) 1px, transparent 1px),
+          linear-gradient(to bottom, rgba(186, 155, 103, 0.05) 1px, transparent 1px)
+        `,
+      },
+      backgroundSize: {
+        'grid-pattern': '40px 40px',
+      },
     },
   },
   plugins: [],

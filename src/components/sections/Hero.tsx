@@ -3,7 +3,6 @@
 import { useEffect, useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ChevronDown } from "lucide-react";
-import DecorativePattern from "../ui/DecorativePattern";
 import Image from "next/image";
 import { gsap } from "gsap";
 
@@ -14,29 +13,93 @@ export default function Hero() {
   const textY = useTransform(scrollY, [0, 300], [0, -50]);
   const bgY = useTransform(scrollY, [0, 300], [0, 100]);
 
-  // GSAP animations for decorative elements
+  // GSAP animations
   useEffect(() => {
     if (!containerRef.current) return;
     
-    const decorativeElements = containerRef.current.querySelectorAll('.decorative-element');
+    const lighthouseElement = containerRef.current.querySelector('.lighthouse-element');
+    const lighthouseLabel = containerRef.current.querySelector('.lighthouse-label');
+    const castleElement = containerRef.current.querySelector('.castle-element');
     
-    gsap.fromTo(decorativeElements, 
-      { opacity: 0, scale: 0.8 },
+    // Enhanced lighthouse animation - rising from bottom with 3D effect
+    gsap.fromTo(lighthouseElement, 
       { 
-        opacity: 0.15, 
-        scale: 1, 
-        duration: 2, 
-        stagger: 0.15,
+        opacity: 0, 
+        y: 200, 
+        scale: 0.85,
+        rotationY: -10,
+        transformOrigin: "bottom center"
+      },
+      { 
+        opacity: 1, 
+        y: 0, 
+        scale: 1,
+        rotationY: 0,
+        duration: 2.5,
         ease: "power3.out",
-        delay: 1.5
+        delay: 1.2
       }
     );
+    
+    // Castle animation - rising from bottom with 3D effect
+    gsap.fromTo(castleElement, 
+      { 
+        opacity: 0, 
+        y: 200, 
+        scale: 0.85,
+        rotationY: 10,
+        transformOrigin: "bottom center"
+      },
+      { 
+        opacity: 1, 
+        y: 0, 
+        scale: 1,
+        rotationY: 0,
+        duration: 2.5,
+        ease: "power3.out",
+        delay: 0.8
+      }
+    );
+    
+    // Lighthouse label animation
+    gsap.fromTo(lighthouseLabel,
+      { opacity: 0, x: -20 },
+      { 
+        opacity: 1, 
+        x: 0, 
+        duration: 1.5,
+        ease: "power2.out",
+        delay: 3
+      }
+    );
+    
+    // Continuous subtle floating animation for lighthouse
+    gsap.to(lighthouseElement, {
+      y: "-15px",
+      rotationY: 3,
+      duration: 4,
+      repeat: -1,
+      yoyo: true,
+      ease: "sine.inOut",
+      delay: 3.7
+    });
+    
+    // Continuous subtle floating animation for castle
+    gsap.to(castleElement, {
+      y: "-12px",
+      rotationY: -3,
+      duration: 3.5,
+      repeat: -1,
+      yoyo: true,
+      ease: "sine.inOut",
+      delay: 3.2
+    });
   }, []);
 
   return (
     <motion.section 
       ref={containerRef}
-      className="min-h-screen flex flex-col justify-between px-6 md:px-12 lg:px-24 py-16 relative overflow-hidden"
+      className="min-h-screen flex flex-col justify-center px-6 md:px-12 lg:px-24 py-32 relative overflow-hidden"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
@@ -56,89 +119,130 @@ export default function Hero() {
           />
         </motion.div>
         <div className="absolute inset-0 bg-sand/90 backdrop-blur-[2px]" />
+        
+        {/* Subtle grid pattern */}
+        <motion.div 
+          className="absolute inset-0 bg-grid-pattern opacity-[0.03] pointer-events-none" 
+          initial={{ scale: 1.05 }}
+          animate={{ scale: 1 }}
+          transition={{ duration: 8, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" }}
+        />
       </div>
-
-      {/* Decorative elements - symmetrically placed */}
-      <DecorativePattern className="absolute top-12 right-12 hidden lg:block" color="gold" opacity={0.1} />
-      <DecorativePattern className="absolute top-12 left-12 hidden lg:block" color="gold" opacity={0.1} />
-      <DecorativePattern className="absolute bottom-32 left-12 hidden lg:block" />
-      <DecorativePattern className="absolute bottom-32 right-12 hidden lg:block" />
       
-      {/* Decorative food icons - symmetrically placed */}
-      <Image 
-        src="/images/icons/food-icon-3.png" 
-        width={60} 
-        height={60} 
-        alt="" 
-        className="absolute top-24 left-[15%] opacity-0 decorative-element hidden md:block"
-      />
-      <Image 
-        src="/images/icons/food-icon-3.png" 
-        width={60} 
-        height={60} 
-        alt="" 
-        className="absolute top-24 right-[15%] opacity-0 decorative-element hidden md:block transform scale-x-[-1]"
-      />
+      {/* Galle Fort Lighthouse - bigger and with 3D effect */}
+      <div className="absolute -bottom-10 right-0 w-48 md:w-72 lg:w-96 h-[400px] md:h-[600px] lg:h-[800px] lighthouse-element opacity-0 z-[2] perspective-[1000px] transform-gpu">
+        <div className="relative w-full h-full drop-shadow-2xl">
+          <Image 
+            src="/images/gallery/lighthouse.png" 
+            alt="Galle Fort Lighthouse" 
+            fill
+            className="object-contain object-bottom"
+            style={{ 
+              filter: "drop-shadow(0 10px 15px rgba(0,0,0,0.3))",
+              transformStyle: "preserve-3d"
+            }}
+          />
+        </div>
+      </div>
       
-      <Image 
-        src="/images/icons/food-icon-7.png" 
-        width={50} 
-        height={50} 
-        alt="" 
-        className="absolute bottom-32 right-[18%] opacity-0 decorative-element hidden md:block"
-      />
-      <Image 
-        src="/images/icons/food-icon-7.png" 
-        width={50} 
-        height={50} 
-        alt="" 
-        className="absolute bottom-32 left-[18%] opacity-0 decorative-element hidden md:block transform scale-x-[-1]"
-      />
+      {/* German Castle - on left side with 3D effect */}
+      <div className="absolute -bottom-10 left-0 w-48 md:w-72 lg:w-96 h-[400px] md:h-[600px] lg:h-[800px] castle-element opacity-0 z-[2] perspective-[1000px] transform-gpu">
+        <div className="relative w-full h-full drop-shadow-2xl">
+          <Image 
+            src="/images/backgrounds/germany-drawn-seamless-pattern 1 (1).png" 
+            alt="German Castle" 
+            fill
+            className="object-contain object-bottom"
+            style={{ 
+              filter: "drop-shadow(0 10px 15px rgba(0,0,0,0.3))",
+              transformStyle: "preserve-3d"
+            }}
+          />
+        </div>
+      </div>
       
-      {/* Decorative corners - perfectly symmetrical */}
-      <div className="absolute top-8 left-8 w-16 h-16 border-t border-l border-gold/20 hidden md:block" />
-      <div className="absolute top-8 right-8 w-16 h-16 border-t border-r border-gold/20 hidden md:block" />
-      <div className="absolute bottom-8 left-8 w-16 h-16 border-b border-l border-gold/20 hidden md:block" />
-      <div className="absolute bottom-8 right-8 w-16 h-16 border-b border-r border-gold/20 hidden md:block" />
+      {/* Curved arrow pointing to lighthouse with elegant text */}
+      <div className="absolute bottom-[18%] right-[18%] md:right-[22%] lg:right-[18%] z-[3] hidden md:block lighthouse-label opacity-0">
+        <div className="relative">
+          {/* Curved arrow SVG */}
+          <svg 
+            width="60" 
+            height="35" 
+            viewBox="0 0 60 35" 
+            fill="none" 
+            xmlns="http://www.w3.org/2000/svg"
+            className="absolute -right-2 top-1/2 transform -translate-y-1/2"
+          >
+            <path 
+              d="M0,15 C15,10 30,12 60,22" 
+              stroke="var(--heritage)" 
+              strokeWidth="1.5" 
+              strokeDasharray="3 2" 
+              fill="none" 
+              opacity="0.7"
+            />
+            <path 
+              d="M55,17 L60,22 L53,25" 
+              stroke="var(--heritage)" 
+              strokeWidth="1.5" 
+              fill="none" 
+              opacity="0.7"
+            />
+          </svg>
+          
+          {/* Elegant text */}
+          <div className="text-right pr-16 transform rotate-[-5deg]">
+            <p className="font-playfair italic text-xs text-heritage drop-shadow-sm" style={{ textShadow: "0 1px 2px rgba(255,255,255,0.8)" }}>
+              Overlooking the Galle Light
+            </p>
+          </div>
+        </div>
+      </div>
+      
+      {/* Sri Lankan coastline silhouette */}
+      <div className="absolute bottom-0 left-0 right-0 h-16 overflow-hidden z-[1] opacity-10">
+        <svg viewBox="0 0 1200 100" className="w-full h-full">
+          <path 
+            d="M0,50 C100,80 200,30 300,50 C400,70 500,20 600,40 C700,60 800,30 900,50 C1000,70 1100,40 1200,60 L1200,100 L0,100 Z" 
+            fill="currentColor" 
+            className="text-charcoal"
+          />
+        </svg>
+      </div>
       
       {/* Main content */}
       <motion.div 
-        className="flex flex-col md:flex-row items-center justify-between w-full h-full flex-1 gap-8 md:gap-4 z-10"
+        className="flex flex-col md:flex-row items-center justify-between w-full h-full flex-1 gap-8 md:gap-4 z-10 mt-24 md:mt-28"
         style={{ opacity: textOpacity, y: textY }}
       >
         {/* Left column */}
         <motion.div 
-          className="w-full md:w-1/3 text-roast text-lg md:text-xl font-light relative"
+          className="w-full md:w-1/3 text-roast text-base md:text-lg font-light relative"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 0.8 }}
         >
           <div className="relative pl-4 md:pl-6">
-            <div className="absolute left-0 top-0 h-full w-0.5 bg-heritage/20"></div>
+            <div className="absolute left-0 top-0 h-full w-0.5 bg-heritage/10"></div>
             <p className="leading-relaxed">
               Nestled in the heart of Galle Fort, Indian Hut honors centuries of spice, culture, and conversation.
             </p>
             
-            {/* Matching decorative element */}
+            {/* Modern accent element */}
             <motion.div
               className="mt-6 opacity-0"
               initial={{ opacity: 0, scale: 0 }}
-              animate={{ opacity: 0.6, scale: 1 }}
+              animate={{ opacity: 0.4, scale: 1 }}
               transition={{ delay: 1.7, duration: 1 }}
             >
-              <Image 
-                src="/images/decorative/decorative-element-5.png" 
-                width={40} 
-                height={40} 
-                alt="" 
-              />
+              <div className="h-0.5 w-12 bg-gold/40"></div>
             </motion.div>
           </div>
         </motion.div>
 
         {/* Center column */}
         <motion.div 
-          className="w-full md:w-1/3 text-center flex flex-col items-center justify-center gap-4 relative"
+          className="w-full md:w-1/3 text-center flex flex-col items-center justify-center gap-3 relative"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5, duration: 0.8 }}
@@ -148,16 +252,16 @@ export default function Hero() {
               xmlns="http://www.w3.org/2000/svg" 
               viewBox="0 0 24 24" 
               fill="currentColor" 
-              className="w-8 h-8"
+              className="w-6 h-6"
             >
               <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
             </svg>
           </div>
-          <h1 className="text-4xl md:text-5xl lg:text-7xl font-playfair text-charcoal tracking-wider heritage-spacing relative">
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-playfair text-charcoal tracking-wider heritage-spacing relative">
             <span className="relative inline-block">
               INDIAN HUT
               <motion.span 
-                className="absolute -bottom-2 left-0 right-0 h-0.5 bg-gold/40 origin-left"
+                className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gold/30 origin-left"
                 initial={{ scaleX: 0 }}
                 animate={{ scaleX: 1 }}
                 transition={{ delay: 1.2, duration: 1.2, ease: "easeOut" }}
@@ -165,96 +269,62 @@ export default function Hero() {
             </span>
           </h1>
           <div className="flex flex-col items-center">
-            <span className="text-lg md:text-xl text-charcoal tracking-widest font-medium">
+            <span className="text-base md:text-lg text-charcoal tracking-widest font-medium">
               HERITAGE
             </span>
-            <span className="text-sm md:text-base text-charcoal tracking-wider mt-1">
-              – GALLE FORT –
+            <span className="text-xs md:text-sm text-charcoal tracking-wider mt-1">
+              SINCE 1986
             </span>
           </div>
           
-          {/* Decorative element below text */}
+          {/* Modern decorative element */}
           <motion.div
-            className="mt-4 opacity-0"
+            className="mt-3 opacity-0 flex gap-1"
             initial={{ opacity: 0, scale: 0 }}
-            animate={{ opacity: 0.6, scale: 1 }}
+            animate={{ opacity: 0.4, scale: 1 }}
             transition={{ delay: 1.5, duration: 1 }}
           >
-            <Image 
-              src="/images/decorative/decorative-element-2.png" 
-              width={60} 
-              height={30} 
-              alt="" 
-              className="mx-auto"
-            />
+            <div className="h-0.5 w-2 bg-gold/40"></div>
+            <div className="h-0.5 w-6 bg-gold/40"></div>
+            <div className="h-0.5 w-2 bg-gold/40"></div>
           </motion.div>
         </motion.div>
 
         {/* Right column */}
         <motion.div 
-          className="w-full md:w-1/3 text-charcoal text-lg md:text-xl font-light text-right relative"
+          className="w-full md:w-1/3 text-charcoal text-base md:text-lg font-light text-right relative"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.7, duration: 0.8 }}
         >
           <div className="relative pr-4 md:pr-6">
-            <div className="absolute right-0 top-0 h-full w-0.5 bg-heritage/20"></div>
+            <div className="absolute right-0 top-0 h-full w-0.5 bg-heritage/10"></div>
             <p className="leading-relaxed">
               Blending the charm of a colonial café with timeless Indian hospitality since 1986.
             </p>
             
-            {/* Matching decorative element */}
+            {/* Modern accent element */}
             <motion.div
               className="mt-6 opacity-0 flex justify-end"
               initial={{ opacity: 0, scale: 0 }}
-              animate={{ opacity: 0.6, scale: 1 }}
+              animate={{ opacity: 0.4, scale: 1 }}
               transition={{ delay: 1.7, duration: 1 }}
             >
-              <Image 
-                src="/images/decorative/decorative-element-5.png" 
-                width={40} 
-                height={40} 
-                alt="" 
-                className="transform scale-x-[-1]"
-              />
+              <div className="h-0.5 w-12 bg-gold/40"></div>
             </motion.div>
           </div>
         </motion.div>
       </motion.div>
 
-      {/* Subtle spice accents - symmetrical */}
-      <motion.div 
-        className="absolute top-1/2 left-0 w-1 h-16 bg-spice hidden lg:block"
-        initial={{ opacity: 0, height: 0 }}
-        animate={{ opacity: 0.7, height: 64 }}
-        transition={{ delay: 1.2, duration: 0.8 }}
-      />
-      <motion.div 
-        className="absolute top-1/2 right-0 w-1 h-16 bg-spice hidden lg:block"
-        initial={{ opacity: 0, height: 0 }}
-        animate={{ opacity: 0.7, height: 64 }}
-        transition={{ delay: 1.2, duration: 0.8 }}
-      />
-      
-      {/* Skyline silhouette */}
-      <div className="absolute bottom-0 left-0 right-0 h-20 overflow-hidden z-[5] opacity-10 mix-blend-multiply">
-        <Image 
-          src="/images/backgrounds/skyline.png" 
-          alt="Skyline" 
-          fill
-          className="object-cover object-bottom scale-110"
-        />
-      </div>
-
       {/* Scroll down arrow with better centering */}
       <motion.div 
-        className="flex justify-center mt-12 z-10"
+        className="flex justify-center mt-24 z-10"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.2, duration: 0.5 }}
       >
         <motion.button
-          className="text-charcoal hover-heritage transition-soft focus:outline-none relative"
+          className="text-charcoal hover-heritage transition-soft focus:outline-none relative flex flex-col items-center"
           animate={{ y: [0, 8, 0] }}
           transition={{ 
             repeat: Infinity, 
@@ -265,12 +335,13 @@ export default function Hero() {
           aria-label="Scroll down"
         >
           <motion.div
-            className="absolute -top-12 left-1/2 transform -translate-x-1/2 w-0.5 h-8 bg-gold/40 origin-bottom"
+            className="absolute -top-10 left-1/2 transform -translate-x-1/2 w-px h-6 bg-gold/30 origin-bottom"
             initial={{ scaleY: 0 }}
             animate={{ scaleY: 1 }}
             transition={{ delay: 1.8, duration: 1 }}
           />
-          <ChevronDown size={32} />
+          <span className="text-xs tracking-widest text-charcoal/50 mb-2 font-light">EXPLORE</span>
+          <ChevronDown size={24} className="text-gold" />
         </motion.button>
       </motion.div>
     </motion.section>
